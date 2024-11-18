@@ -245,3 +245,9 @@ app_license = "mit"
 fixtures = [
     {"doctype": "Custom Field"}
 ]
+
+doc_events = {
+    "Customer": {
+        "after_insert": "sonali.custom_functions.Customer.qr_code"
+    }
+}
