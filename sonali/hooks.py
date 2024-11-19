@@ -264,7 +264,7 @@ fixtures = [{
         "doctype": "Workflow",
     },
     {
-        "doctype": "Assignment Rule",
+        "doctype": "Print Format",
     },
     
 ]
