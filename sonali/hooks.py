@@ -242,9 +242,31 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-fixtures = [
-    {"doctype": "Custom Field"},
-    {"doctype": "Property Setter"}
+fixtures = [{
+        "doctype": "Custom Field",
+    },
+    {
+        "doctype": "Property Setter",
+    },
+    {
+        "doctype": "Server Script",
+    },
+    {
+        "doctype": "Client Script",
+    },
+    {
+        "doctype": "Workflow Action Master",
+    },
+    {
+        "doctype": "Workflow State",
+    },
+    {
+        "doctype": "Workflow",
+    },
+    {
+        "doctype": "Assignment Rule",
+    },
+    
 ]
 
 doc_events = {
