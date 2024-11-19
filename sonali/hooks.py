@@ -243,11 +243,12 @@ app_license = "mit"
 # }
 
 fixtures = [
-    {"doctype": "Custom Field"}
+    {"doctype": "Custom Field"},
+    {"doctype": "Property Setter"}
 ]
 
 doc_events = {
-    "Customer": {
+    "Serial No": {
         "after_insert": "sonali.custom_functions.Customer.qr_code"
     }
 }
