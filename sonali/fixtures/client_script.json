@@ -1,1 +1,13 @@
-[]
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Serial No",
+  "enabled": 1,
+  "modified": "2024-11-20 13:49:39.931712",
+  "module": "Sonali",
+  "name": "Serial Number QR Code generator",
+  "script": "frappe.ui.form.on('Serial No', {\n    onload: function(frm) {\n        frappe.call({\n                method: 'sonali.custom_functions.Serial_No.generate_qr_for_missing_serials',  // Backend method to generate QR codes\n                callback: function(r) {\n                    if (!r.exc) {\n                        // If successful, show a success message\n                       console.log(\"Generating QR code\")\n                    } else {\n                        // If there was an error, show an error message\n                        frappe.msgprint(__('Error generating QR Codes.'));\n                    }\n                }\n            });\n    }\n});",
+  "view": "Form"
+ }
+]

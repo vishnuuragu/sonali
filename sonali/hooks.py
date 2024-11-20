@@ -274,12 +274,7 @@ fixtures = [{
     },
     {"dt": "Operation", "filters": []},
     {"dt": "Workstation", "filters": []},
-    {"dt": "Employee", "filters": []}
+    {"dt": "Employee", "filters": []},
+    {"dt": "Client Script"}
     
 ]
-
-doc_events = {
-    "Serial No": {
-        "after_insert": "sonali.custom_functions.Customer.qr_code"
-    }
-}
