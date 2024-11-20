@@ -1,0 +1,25 @@
+[
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Workstation",
+  "holiday_list": null,
+  "hour_rate": 0.0,
+  "hour_rate_consumable": 0.0,
+  "hour_rate_electricity": 0.0,
+  "hour_rate_labour": 0.0,
+  "hour_rate_rent": 0.0,
+  "modified": "2024-11-20 11:47:56.749666",
+  "name": "Work - 3",
+  "off_status_image": null,
+  "on_status_image": null,
+  "plant_floor": null,
+  "production_capacity": 1,
+  "status": "Off",
+  "total_working_hours": 0.0,
+  "warehouse": null,
+  "working_hours": [],
+  "workstation_name": "Work - 3",
+  "workstation_type": null
+ }
+]

@@ -271,7 +271,10 @@ fixtures = [{
     },
     {
         "dt": "Item", "filters": [["creation", ">", "2024-11-19"]]
-    }
+    },
+    {"dt": "Operation", "filters": []},
+    {"dt": "Workstation", "filters": []},
+    {"dt": "Employee", "filters": []}
     
 ]
 

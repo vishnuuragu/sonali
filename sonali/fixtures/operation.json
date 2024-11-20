@@ -1,0 +1,58 @@
+[
+ {
+  "batch_size": 1,
+  "create_job_card_based_on_batch_size": 0,
+  "description": "Bunching",
+  "docstatus": 0,
+  "doctype": "Operation",
+  "is_corrective_operation": 0,
+  "modified": "2024-11-20 10:33:31.339567",
+  "name": "Bunching",
+  "quality_inspection_template": null,
+  "sub_operations": [],
+  "total_operation_time": 0.0,
+  "workstation": null
+ },
+ {
+  "batch_size": 1,
+  "create_job_card_based_on_batch_size": 0,
+  "description": "Wire Drawing",
+  "docstatus": 0,
+  "doctype": "Operation",
+  "is_corrective_operation": 0,
+  "modified": "2024-11-20 10:21:11.964601",
+  "name": "Wire Drawing",
+  "quality_inspection_template": null,
+  "sub_operations": [],
+  "total_operation_time": 0.0,
+  "workstation": null
+ },
+ {
+  "batch_size": 1,
+  "create_job_card_based_on_batch_size": 0,
+  "description": "Insulation",
+  "docstatus": 0,
+  "doctype": "Operation",
+  "is_corrective_operation": 0,
+  "modified": "2024-11-20 10:34:00.123769",
+  "name": "Insulation",
+  "quality_inspection_template": null,
+  "sub_operations": [],
+  "total_operation_time": 0.0,
+  "workstation": null
+ },
+ {
+  "batch_size": 1,
+  "create_job_card_based_on_batch_size": 0,
+  "description": "Annealing",
+  "docstatus": 0,
+  "doctype": "Operation",
+  "is_corrective_operation": 0,
+  "modified": "2024-11-20 10:32:59.717515",
+  "name": "Annealing",
+  "quality_inspection_template": null,
+  "sub_operations": [],
+  "total_operation_time": 0.0,
+  "workstation": null
+ }
+]
