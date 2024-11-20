@@ -270,7 +270,7 @@ fixtures = [{
         "dt": "BOM", "filters": [["name", "in", ["BOM-Copper Wire-001"]]]
     },
     {
-        {"dt": "Item", "filters": [["creation", ">", "2024-11-19"]]}
+        "dt": "Item", "filters": [["creation", ">", "2024-11-19"]]
     }
     
 ]
