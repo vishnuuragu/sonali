@@ -9,5 +9,16 @@
   "name": "Serial Number QR Code generator",
   "script": "frappe.ui.form.on('Serial No', {\n    onload: function(frm) {\n        frappe.call({\n                method: 'sonali.custom_functions.Serial_No.generate_qr_for_missing_serials',  // Backend method to generate QR codes\n                callback: function(r) {\n                    if (!r.exc) {\n                        // If successful, show a success message\n                       console.log(\"Generating QR code\")\n                    } else {\n                        // If there was an error, show an error message\n                        frappe.msgprint(__('Error generating QR Codes.'));\n                    }\n                }\n            });\n    }\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Work Order",
+  "enabled": 1,
+  "modified": "2024-11-22 10:43:38.415711",
+  "module": "Sonali",
+  "name": "Defaults in Work Order",
+  "script": "frappe.ui.form.on('Work Order', {\r\n    before_save: function(frm) {\r\n        // Loop through each row in the Operations child table\r\n        frm.doc.operations.forEach(row => {\r\n            if (!row.workstation) { // Only set if workstation is not already defined\r\n                row.workstation = \"Work - 3\"; // Replace with your default workstation name\r\n            }\r\n        });\r\n        frm.refresh_field('operations'); // Refresh the table to reflect changes\r\n    }\r\n});",
+  "view": "Form"
  }
 ]
