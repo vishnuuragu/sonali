@@ -1,7 +1,11 @@
 import frappe
 
-@frappe.whitelist()  # Makes the method accessible via API
+@frappe.whitelist(allow_guest=True) 
 def get_product_details_by_uuid(custom_uuid):
+    STATIC_TOKEN = frappe.get_conf().get("static_api_token")
+    auth_header = frappe.get_request_header("X-Static-Token")
+    if auth_header != f"Bearer {STATIC_TOKEN}":
+        frappe.throw("Unauthorized", frappe.AuthenticationError)
     # Fetch the Serial No linked to the custom_uuid
     serial_no = frappe.db.get_value("Serial No", {"custom_uuid": custom_uuid}, "name")
     if not serial_no:
@@ -42,8 +46,12 @@ def get_product_details_by_uuid(custom_uuid):
     }
 
 
-@frappe.whitelist()  # Makes the method accessible via API
+@frappe.whitelist(allow_guest=True)  # Makes the method accessible via API
 def update_status_by_uuid(custom_uuid, custom_redeem):
+    STATIC_TOKEN = frappe.get_conf().get("static_api_token")
+    auth_header = frappe.get_request_header("X-Static-Token")
+    if auth_header != f"Bearer {STATIC_TOKEN}":
+        frappe.throw("Unauthorized", frappe.AuthenticationError)
     # Validate inputs
     if not custom_uuid or not custom_redeem:
         frappe.throw("Both 'custom_uuid' and 'new_status' are required.")
