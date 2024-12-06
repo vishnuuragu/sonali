@@ -242,14 +242,12 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-fixtures = [{
+fixtures = [
+    {
         "doctype": "Custom Field",
     },
     {
         "doctype": "Property Setter",
-    },
-    {
-        "doctype": "Server Script",
     },
     {
         "doctype": "Client Script",
@@ -261,16 +259,13 @@ fixtures = [{
         "doctype": "Workflow State",
     },
     {
-        "doctype": "Workflow",
-    },
-    {
         "doctype": "Print Format",
-    },
-    {
-        "dt": "BOM", "filters": [["name", "in", ["BOM-Copper Wire-001"]]]
     },
     {"dt": "Operation", "filters": []},
     {"dt": "Workstation", "filters": []},
-    {"dt": "Employee", "filters": []}
-    
+    {"dt": "Employee", "filters": []},
+    {"doctype": "Item"},
+    {"doctype": "BOM"},
+    {"dt": "Workstation Type", "filters": []}
 ]
+

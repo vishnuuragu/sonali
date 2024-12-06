@@ -1,0 +1,15 @@
+[
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Workstation Type",
+  "hour_rate": 0.0,
+  "hour_rate_consumable": 0.0,
+  "hour_rate_electricity": 0.0,
+  "hour_rate_labour": 0.0,
+  "hour_rate_rent": 0.0,
+  "modified": "2024-12-06 20:29:15.491830",
+  "name": "Work-1",
+  "workstation_type": "Work-1"
+ }
+]
