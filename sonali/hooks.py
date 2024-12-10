@@ -266,6 +266,7 @@ fixtures = [
     {"dt": "Employee", "filters": []},
     {"doctype": "Item"},
     {"doctype": "BOM"},
-    {"dt": "Workstation Type", "filters": []}
+    {"dt": "Workstation Type", "filters": []},
+    {"dt": "Employee Group", "filters": []}
 ]
 

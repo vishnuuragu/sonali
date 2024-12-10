@@ -20,5 +20,16 @@
   "name": "Defaults in Work Order",
   "script": "frappe.ui.form.on('Work Order', {\r\n    before_save: function(frm) {\r\n        // Loop through each row in the Operations child table\r\n        frm.doc.operations.forEach(row => {\r\n            if (!row.workstation) { // Only set if workstation is not already defined\r\n                row.workstation = \"Work - 3\"; // Replace with your default workstation name\r\n            }\r\n        });\r\n        frm.refresh_field('operations'); // Refresh the table to reflect changes\r\n    }\r\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Job Card",
+  "enabled": 1,
+  "modified": "2024-12-10 10:19:40.973691",
+  "module": "Sonali",
+  "name": "Dynamic Filtering on link field on Job card",
+  "script": "frappe.ui.form.on(\"Job Card\", {\r\n    refresh: function(frm) {\r\n        let operation = frm.doc.operation;\r\n        if (operation === \"Wire Drawing\") {\r\n                group = \"Wire Drawing Team\";\r\n            } \r\n        else if (operation === \"Annealing\") {\r\n                group = \"Annealing Team\";\r\n            } \r\n        else if (operation === \"Bunching\") {\r\n                group = \"Bunching Team\";\r\n            } \r\n        else if (operation === \"Insulation\") {\r\n                group = \"Insulation Team\";\r\n            }\r\n        frm.set_query('employee', () => {\r\n    return {\r\n        filters: {\r\n            custom_employee_group: group\r\n        }\r\n    };\r\n        });\r\n    }\r\n});",
+  "view": "Form"
  }
 ]
