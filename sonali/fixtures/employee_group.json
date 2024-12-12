@@ -2,14 +2,6 @@
  {
   "docstatus": 0,
   "doctype": "Employee Group",
-  "employee_group_name": "Wire Drawing team",
-  "employee_list": [],
-  "modified": "2024-12-09 14:55:16.357325",
-  "name": "Wire Drawing team"
- },
- {
-  "docstatus": 0,
-  "doctype": "Employee Group",
   "employee_group_name": "Annealing team",
   "employee_list": [],
   "modified": "2024-12-09 14:55:36.531799",
@@ -30,5 +22,13 @@
   "employee_list": [],
   "modified": "2024-12-09 14:55:58.607240",
   "name": "Insulation Team"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Employee Group",
+  "employee_group_name": "Packaging Team",
+  "employee_list": [],
+  "modified": "2024-12-12 12:20:44.316060",
+  "name": "Packaging Team"
  }
 ]
