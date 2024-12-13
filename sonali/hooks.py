@@ -270,3 +270,11 @@ fixtures = [
     {"dt": "Employee Group", "filters": []}
 ]
 
+website_generators = []
+
+web_routes = [
+    {
+        "route": "/reports",
+        "page": "reports"
+    }
+]

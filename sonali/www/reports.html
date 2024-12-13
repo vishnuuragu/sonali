@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+
+{% block content %}
+<div class="reports-container">
+    <h1>Reports</h1>
+    <div id="stock-report">
+        <h2>Stock Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Warehouse</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stock_details %}
+                <tr>
+                    <td>{{ stock.item_code }}</td>
+                    <td>{{ stock.actual_qty }}</td>
+                    <td>{{ stock.warehouse }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="job-card-report">
+        <h2>Job Card Details</h2>
+        <ul>
+            {% for job_card in job_card_details %}
+            <li>{{ job_card.name }} - {{ job_card.status }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="work-order-report">
+        <h2>Work Order Details</h2>
+        <ul>
+            {% for work_order in work_order_details %}
+            <li>{{ work_order.name }} - {{ work_order.status }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
