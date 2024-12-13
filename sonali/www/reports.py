@@ -8,11 +8,22 @@ def get_context(context):
     )
 
     # Fetch job card details
-    job_card_details = frappe.db.get_list(
-        'Job Card',
-        filters={'status': 'Open'},  # Filter for pending job cards
-        fields=['name','operation', 'status', 'employee', 'time_required']
-    )
+    job_card_details = frappe.db.sql("""
+        SELECT 
+            jc.name AS name,
+            jc.operation AS operation,
+            jctl.employee AS employee,
+            jc.status AS status,
+            jc.time_required AS time_required
+        FROM 
+            `tabJob Card` jc
+        LEFT JOIN 
+            `tabJob Card Time Log` jctl
+        ON 
+            jc.name = jctl.parent
+        WHERE 
+            jc.status NOT IN ('Completed')
+    """, as_dict=True)
 
     # Fetch work order details
     work_order_details = frappe.db.get_list(

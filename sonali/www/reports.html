@@ -24,6 +24,7 @@
                         <th>Job Card</th>
                         <th>Operation</th>
                         <th>Employee</th>
+                        <th>Status</th>
                         <th>Expected Time</th>
                     </tr>
                 </thead>
@@ -32,7 +33,8 @@
                     <tr>
                         <td>{{ job_card.name }}</td>
                         <td>{{ job_card.operation }}</td>
-                        <td>{{ job_card.employee }}</td>
+                        <td>{{ job_card.employee or 'Not Assigned'}}</td>
+                        <td>{{ job_card.status }}</td>
                         <td>{{ job_card.time_required }}</td>
                     </tr>
                     {% endfor %}
