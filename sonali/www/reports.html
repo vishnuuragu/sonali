@@ -1,32 +1,16 @@
 {% extends "templates/web.html" %}
 
+{% block header %}{% endblock %} <!-- Remove header -->
+{% block footer %}{% endblock %} <!-- Remove footer -->
+
 {% block content %}
 <div class="container my-5 reports-container">
     <h1 class="text-center mb-4">Reports</h1>
     
-    <!-- Stock Details Section -->
+    <!-- Stock Details Chart Section -->
     <div id="stock-report" class="mb-5">
         <h2 class="text-primary mb-3">Stock Details</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Warehouse</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for stock in stock_details %}
-                    <tr>
-                        <td>{{ stock.item_code }}</td>
-                        <td>{{ stock.actual_qty }}</td>
-                        <td>{{ stock.warehouse }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <canvas id="stockChart" width="400" height="200"></canvas>
     </div>
 
     <!-- Pending Job Cards Section -->
@@ -77,4 +61,70 @@
         {% endif %}
     </div>
 </div>
+
+<!-- Include Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Prepare the data dynamically
+    const stockDetails = [
+        {% for stock in stock_details %}
+            { 
+                item: "{{ stock.item_code }}", 
+                warehouse: "{{ stock.warehouse }}", 
+                quantity: {{ stock.actual_qty }} 
+            },
+        {% endfor %}
+    ];
+
+    // Group data by item and warehouse
+    const warehouses = [...new Set(stockDetails.map(stock => stock.warehouse))]; // Unique warehouses
+    const items = [...new Set(stockDetails.map(stock => stock.item))]; // Unique items
+
+    // Create a dataset for each warehouse
+    const datasets = warehouses.map(warehouse => {
+        return {
+            label: warehouse,
+            data: items.map(item => {
+                // Find stock quantity for the given item and warehouse
+                const stock = stockDetails.find(stock => stock.item === item && stock.warehouse === warehouse);
+                return stock ? stock.quantity : 0; // Default to 0 if no data
+            }),
+            backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`,
+            borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+            borderWidth: 1
+        };
+    });
+
+    // Render the chart
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    const stockChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: items,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                },
+                title: {
+                    display: true,
+                    text: 'Stock Details by Warehouse'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    beginAtZero: true,
+                    stacked: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
