@@ -10,7 +10,8 @@ def get_context(context):
     # Fetch job card details
     job_card_details = frappe.db.get_list(
         'Job Card',
-        fields=['name', 'status']
+        filters={'status': 'Open'},  # Filter for pending job cards
+        fields=['name','operation', 'status', 'employee', 'time_required']
     )
 
     # Fetch work order details

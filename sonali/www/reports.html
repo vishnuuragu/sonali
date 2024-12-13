@@ -1,44 +1,80 @@
 {% extends "templates/web.html" %}
 
 {% block content %}
-<div class="reports-container">
-    <h1>Reports</h1>
-    <div id="stock-report">
-        <h2>Stock Details</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Warehouse</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for stock in stock_details %}
-                <tr>
-                    <td>{{ stock.item_code }}</td>
-                    <td>{{ stock.actual_qty }}</td>
-                    <td>{{ stock.warehouse }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container my-5 reports-container">
+    <h1 class="text-center mb-4">Reports</h1>
+    
+    <!-- Stock Details Section -->
+    <div id="stock-report" class="mb-5">
+        <h2 class="text-primary mb-3">Stock Details</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Warehouse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in stock_details %}
+                    <tr>
+                        <td>{{ stock.item_code }}</td>
+                        <td>{{ stock.actual_qty }}</td>
+                        <td>{{ stock.warehouse }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div id="job-card-report">
-        <h2>Job Card Details</h2>
-        <ul>
-            {% for job_card in job_card_details %}
-            <li>{{ job_card.name }} - {{ job_card.status }}</li>
-            {% endfor %}
-        </ul>
+
+    <!-- Pending Job Cards Section -->
+    <div id="job-card-report" class="mb-5">
+        <h2 class="text-success mb-3">Pending Job Cards</h2>
+        {% if job_card_details %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Job Card</th>
+                        <th>Operation</th>
+                        <th>Employee</th>
+                        <th>Expected Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job_card in job_card_details %}
+                    <tr>
+                        <td>{{ job_card.name }}</td>
+                        <td>{{ job_card.operation }}</td>
+                        <td>{{ job_card.employee }}</td>
+                        <td>{{ job_card.time_required }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-warning">No pending job cards found.</p>
+        {% endif %}
     </div>
+
+    <!-- Work Order Details Section -->
     <div id="work-order-report">
-        <h2>Work Order Details</h2>
-        <ul>
+        <h2 class="text-info mb-3">Work Order Details</h2>
+        {% if work_order_details %}
+        <ul class="list-group">
             {% for work_order in work_order_details %}
-            <li>{{ work_order.name }} - {{ work_order.status }}</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ work_order.name }}
+                <span class="badge bg-primary rounded-pill">{{ work_order.status }}</span>
+            </li>
             {% endfor %}
         </ul>
+        {% else %}
+        <p class="text-warning">No work order details available.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
