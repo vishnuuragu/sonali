@@ -7,9 +7,9 @@ def get_context(context):
         fields=['item_code', 'actual_qty', 'warehouse'],
     )
 
-    # Fetch job card details
+    # Fetch job card details (ensure no duplicates by selecting distinct records)
     job_card_details = frappe.db.sql("""
-        SELECT 
+        SELECT DISTINCT
             jc.name AS name,
             jc.operation AS operation,
             jctl.employee AS employee,
@@ -24,6 +24,16 @@ def get_context(context):
         WHERE 
             jc.status NOT IN ('Completed')
     """, as_dict=True)
+
+    # Optional: Additional deduplication logic in case database query includes duplicates
+    unique_job_cards = {}
+    for job_card in job_card_details:
+        if job_card['name'] not in unique_job_cards:
+            unique_job_cards[job_card['name']] = job_card
+
+    # Convert back to a list for rendering in the template
+    job_card_details = list(unique_job_cards.values())
+
 
     current_page = frappe.form_dict.page or 1  # Get page number from query parameters
     items_per_page = 4
