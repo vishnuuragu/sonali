@@ -14,18 +14,13 @@
     font-size: 13px;
 }
 .card-text.text-secondary {
-    color: #6c757d; /* Muted gray for status */
+    color: #000000 !important; /* Muted gray for status */
 }
 .card-text.text-info {
     color: #17a2b8; /* Info blue for production item */
 }
 .card-text.text-primary {
-    color: #007bff; /* Primary blue for quantity */
+    color: #ba2ade !important; /* Primary blue for quantity */
 }
 
-
-.card {
-    border-radius: 8px;
-    font-size: 14px;
-}
 
