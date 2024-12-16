@@ -46,22 +46,42 @@
         {% endif %}
     </div>
 
-    <!-- Work Order Details Section -->
-    <div id="work-order-report">
-        <h2 class="text-info mb-3">Work Order Details</h2>
-        {% if work_order_details %}
-        <ul class="list-group">
+    <h2 class="text-success mb-3">Work Orders</h2>
+    <div id="work-orders" class="container">
+        <!-- Work Order Cards -->
+        <div class="row row-cols-1 row-cols-md-2 g-3">
             {% for work_order in work_order_details %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ work_order.name }}
-                <span class="badge bg-primary rounded-pill">{{ work_order.status }}</span>
-            </li>
+            <div class="col">
+                <div class="card shadow-sm border-0" 
+                     style="border-left: 5px solid {% if work_order.status == 'Completed' %}green{% elif work_order.status == 'In Progress' %}orange{% else %}red{% endif %};">
+                    <div class="card-body py-3 px-4">
+                        <!-- Custom Text Colors -->
+                        <h6 class="card-title text-dark text-truncate mb-2"><strong>{{ work_order.name }}</strong></h6>
+                        <p class="card-text text-secondary mb-1"><strong>Status:</strong> 
+                            <span class="badge {% if work_order.status == 'Completed' %}bg-success{% elif work_order.status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
+                                {{ work_order.status }}
+                            </span>
+                        </p>
+                        <p class="card-text text-info mb-1"><strong>Production Item:</strong> {{ work_order.production_item }}</p>
+                        <p class="card-text text-primary"><strong>Quantity:</strong> {{ work_order.qty }}</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
-        {% else %}
-        <p class="text-warning">No work order details available.</p>
-        {% endif %}
+        </div>
+    
+        <!-- Pagination Controls -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <button id="prevPage" class="btn btn-outline-primary btn-sm" {% if current_page == 1 %}disabled{% endif %}>Previous</button>
+            <span class="text-muted">Page {{ current_page }} of {{ total_pages }}</span>
+            <button id="nextPage" class="btn btn-outline-primary btn-sm" {% if current_page == total_pages %}disabled{% endif %}>Next</button>
+        </div>
     </div>
+    
+    <!-- Bottom Gap -->
+    <div style="margin-bottom: 50px;"></div>
+    
+    
 </div>
 
 <!-- Include Chart.js from CDN -->
@@ -126,6 +146,21 @@
                     stacked: true
                 }
             }
+        }
+    });
+    // Pagination for Work Order
+    document.getElementById('prevPage').addEventListener('click', () => {
+        const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || 1);
+        if (currentPage > 1) {
+            window.location.search = `?page=${currentPage - 1}`;
+        }
+    });
+    
+    document.getElementById('nextPage').addEventListener('click', () => {
+        const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || 1);
+        const totalPages = {{ total_pages }};
+        if (currentPage < totalPages) {
+            window.location.search = `?page=${currentPage + 1}`;
         }
     });
 </script>
