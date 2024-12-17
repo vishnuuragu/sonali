@@ -6,60 +6,50 @@ def get_context(context):
         'Bin',
         fields=['item_code', 'actual_qty', 'warehouse'],
     )
+    # Pass the fetched data to the context
+    context.stock_details = stock_details
 
-    # Fetch job card details (ensure no duplicates by selecting distinct records)
-    job_card_details = frappe.db.sql("""
-        SELECT DISTINCT
-            jc.name AS name,
-            jc.operation AS operation,
-            jctl.employee AS employee,
-            jc.status AS status,
-            jc.time_required AS time_required
-        FROM 
-            `tabJob Card` jc
-        LEFT JOIN 
-            `tabJob Card Time Log` jctl
-        ON 
-            jc.name = jctl.parent
-        WHERE 
-            jc.status NOT IN ('Completed')
-    """, as_dict=True)
-
-    # Optional: Additional deduplication logic in case database query includes duplicates
-    unique_job_cards = {}
-    for job_card in job_card_details:
-        if job_card['name'] not in unique_job_cards:
-            unique_job_cards[job_card['name']] = job_card
-
-    # Convert back to a list for rendering in the template
-    job_card_details = list(unique_job_cards.values())
-
-
-    current_page = frappe.form_dict.page or 1  # Get page number from query parameters
-    items_per_page = 4
-    start = (int(current_page) - 1) * items_per_page
-
-    # Fetch total Work Orders count
-    total_count = frappe.db.count('Work Order')
-
-    # Fetch paginated Work Orders
-    work_order_details = frappe.db.get_list(
+    # For Work Orders and Job Cards combined report
+    work_orders = frappe.db.get_list(
         'Work Order',
         fields=['name', 'status', 'production_item', 'qty'],
         order_by='creation DESC',
-        limit_start=start,
-        limit_page_length=items_per_page
+        limit_page_length=4
     )
 
-    # Calculate total pages
-    total_pages = (total_count + items_per_page - 1) // items_per_page
+    # Combine Work Orders with related Job Cards and calculate progress
+    combined_data = []
+    for work_order in work_orders:
+        # Fetch related Job Cards
+        job_cards = frappe.db.sql("""
+            SELECT DISTINCT
+                jc.operation AS operation,
+                jctl.employee AS employee,
+                jc.status AS status
+            FROM 
+                `tabJob Card` jc
+            LEFT JOIN 
+                `tabJob Card Time Log` jctl
+            ON 
+                jc.name = jctl.parent
+            WHERE 
+                jc.work_order = %s
+        """, work_order.name, as_dict=True)
+
+        # Calculate progress (percentage of completed operations)
+        total_operations = len(job_cards)
+        completed_operations = sum(1 for jc in job_cards if jc['status'] == 'Completed')
+        progress = (completed_operations / total_operations * 100) if total_operations > 0 else 0
+
+        # Add to combined data
+        combined_data.append({
+            'name': work_order.name,
+            'status': work_order.status,
+            'production_item': work_order.production_item,
+            'qty': work_order.qty,
+            'progress': int(progress),
+            'operations': job_cards
+        })
 
     # Pass data to context
-    context.work_order_details = work_order_details
-    context.current_page = int(current_page)
-    context.total_pages = total_pages
-
-    # Pass the fetched data to the context
-    context.stock_details = stock_details
-    context.job_card_details = job_card_details
-    context.work_order_details = work_order_details
+    context.combined_data = combined_data

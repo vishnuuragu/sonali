@@ -1,42 +1,15 @@
 {% extends "templates/web.html" %}
 
-{% block header %}{% endblock %} <!-- Remove header -->
+{% block header %}
+<!-- Add Bootstrap CSS and Icons in the <head> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %} <!-- Remove header -->
 {% block footer %}{% endblock %} <!-- Remove footer -->
 
 {% block content %}
 <div class="container my-5 reports-container">
     <h1 class="text-center mb-4">Reports</h1>
-    <h2 class="text-success mb-3">Work Orders</h2>
-    <div id="work-orders" class="container">
-        <!-- Work Order Cards -->
-        <div class="row row-cols-1 row-cols-md-2 g-3">
-            {% for work_order in work_order_details %}
-            <div class="col">
-                <div class="card shadow-sm border-0" 
-                     style="border-left: 5px solid {% if work_order.status == 'Completed' %}green{% elif work_order.status == 'In Progress' %}orange{% else %}red{% endif %};">
-                    <div class="card-body py-3 px-4">
-                        <!-- Custom Text Colors -->
-                        <h6 class="card-title text-dark text-truncate mb-2"><strong>{{ work_order.name }}</strong></h6>
-                        <p class="card-text text-secondary mb-1"><strong>Status:</strong> 
-                            <span class="badge {% if work_order.status == 'Completed' %}bg-success{% elif work_order.status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
-                                {{ work_order.status }}
-                            </span>
-                        </p>
-                        <p class="card-text text-info mb-1"><strong>Production Item:</strong> {{ work_order.production_item }}</p>
-                        <p class="card-text text-primary"><strong>Quantity:</strong> {{ work_order.qty }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    
-        <!-- Pagination Controls -->
-        <div class="d-flex justify-content-between align-items-center mt-4">
-            <button id="prevPage" class="btn btn-outline-primary btn-sm" {% if current_page == 1 %}disabled{% endif %}>Previous</button>
-            <span class="text-muted">Page {{ current_page }} of {{ total_pages }}</span>
-            <button id="nextPage" class="btn btn-outline-primary btn-sm" {% if current_page == total_pages %}disabled{% endif %}>Next</button>
-        </div>
-    </div>
     
     <!-- Stock Details Chart Section -->
     <div id="stock-report" class="mb-5">
@@ -44,38 +17,62 @@
         <canvas id="stockChart" width="400" height="200"></canvas>
     </div>
 
-    <!-- Pending Job Cards Section -->
-    <div id="job-card-report" class="mb-5">
-        <h2 class="text-success mb-3">Pending Job Cards</h2>
-        {% if job_card_details %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Job Card</th>
-                        <th>Operation</th>
-                        <th>Employee</th>
-                        <th>Status</th>
-                        <th>Expected Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for job_card in job_card_details %}
-                    <tr>
-                        <td>{{ job_card.name }}</td>
-                        <td>{{ job_card.operation }}</td>
-                        <td>{{ job_card.employee or 'Not Assigned'}}</td>
-                        <td>{{ job_card.status }}</td>
-                        <td>{{ job_card.time_required }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div id="work-orders-timeline" class="container">
+        <h2 class="text-center mb-4">Work order Timeline</h2>
+    
+        <!-- Work Order Cards -->
+        <div class="row row-cols-1 g-4">
+            {% for work_order in combined_data %}
+            <div class="col">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark"><strong>{{ work_order.name }}</strong></h5>
+                        <p class="card-text text-muted mb-1"><strong>Status:</strong> 
+                            <span class="badge {% if work_order.status == 'Completed' %}bg-success{% elif work_order.status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
+                                {{ work_order.status }}
+                            </span>
+                        </p>
+                        <p class="card-text text-info mb-1"><strong>Production Item:</strong> {{ work_order.production_item }}</p>
+                        <p class="card-text text-primary"><strong>Quantity:</strong> {{ work_order.qty }}</p>
+    
+                        <!-- Progress Bar -->
+                        <div class="progress my-3" style="height: 20px;">
+                            <div class="progress-bar {% if work_order.progress == 100 %}bg-success{% else %}bg-warning{% endif %}" 
+                                 role="progressbar" 
+                                 style="width: {{ work_order.progress }}%;" 
+                                 aria-valuenow="{{ work_order.progress }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                {{ work_order.progress }}%
+                            </div>
+                        </div>
+    
+                        <!-- Expandable Operations Timeline -->
+                        <button class="btn btn-link text-decoration-none p-0 mb-3 toggle-timeline" type="button" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#timeline-{{ work_order.name }}" 
+                                aria-expanded="false" 
+                                aria-controls="timeline-{{ work_order.name }}">
+                            <i class="bi bi-chevron-down"></i> View Operations Timeline
+                        </button>
+    
+                        <div class="collapse" id="timeline-{{ work_order.name }}">
+                            <ul class="timeline">
+                                {% for operation in work_order.operations %}
+                                <li class="{% if operation.status == 'Completed' %}completed{% else %}pending{% endif %}">
+                                    <strong>{{ operation.operation }}</strong>
+                                    <p class="text-muted">Status: {{ operation.status }}</p>
+                                    <p class="text-muted">Employee: {{ operation.employee or 'Not Assigned' }}</p>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% else %}
-        <p class="text-warning">No pending job cards found.</p>
-        {% endif %}
-    </div>
+    </div>    
 
     
     
@@ -149,20 +146,18 @@
             }
         }
     });
-    // Pagination for Work Order
-    document.getElementById('prevPage').addEventListener('click', () => {
-        const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || 1);
-        if (currentPage > 1) {
-            window.location.search = `?page=${currentPage - 1}`;
-        }
-    });
-    
-    document.getElementById('nextPage').addEventListener('click', () => {
-        const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || 1);
-        const totalPages = {{ total_pages }};
-        if (currentPage < totalPages) {
-            window.location.search = `?page=${currentPage + 1}`;
-        }
+    // For Expand button in Work order and Job cards
+    document.querySelectorAll('.toggle-timeline').forEach(button => {
+        button.addEventListener('click', function () {
+            const icon = this.querySelector('i');
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            icon.style.transform = expanded ? 'rotate(0)' : 'rotate(180deg)';
+        });
     });
 </script>
+
+<!-- Bootstrap JS (required for collapse functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
 {% endblock %}

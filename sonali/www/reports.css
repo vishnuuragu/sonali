@@ -1,26 +1,47 @@
-.card {
-    border-radius: 8px;
-    font-size: 14px;
-}
-.card-body {
-    padding: 12px;
-}
-.card-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #343a40;
-}
-.card-text {
-    font-size: 13px;
-}
-.card-text.text-secondary {
-    color: #000000 !important; /* Muted gray for status */
-}
-.card-text.text-info {
-    color: #17a2b8; /* Info blue for production item */
-}
-.card-text.text-primary {
-    color: #ba2ade !important; /* Primary blue for quantity */
+/* Timeline Styles */
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid #ccc;
+    position: relative;
 }
 
+.timeline li {
+    position: relative;
+    padding: 15px 0 15px 30px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.timeline li.completed::before {
+    content: "✔";
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    color: green;
+    font-size: 18px;
+}
+
+.timeline li.pending::before {
+    content: "•";
+    position: absolute;
+    left: -18px;
+    top: 12px;
+    color: orange;
+    font-size: 18px;
+}
+
+/* Button styling */
+.toggle-timeline {
+    color: #007bff;
+    font-size: 14px;
+}
+
+.toggle-timeline i {
+    transition: transform 0.3s ease-in-out;
+}
+
+.toggle-timeline[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
 
