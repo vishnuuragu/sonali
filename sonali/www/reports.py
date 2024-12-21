@@ -14,7 +14,7 @@ def get_context(context):
         'Work Order',
         fields=['name', 'status', 'production_item', 'qty'],
         order_by='creation DESC',
-        limit_page_length=4
+        limit_page_length=1
     )
 
     # Combine Work Orders with related Job Cards and calculate progress
