@@ -80,10 +80,39 @@
     </div>
 </div>
 
-<div class="box custom-box shadow-sm border p-3">
-    <h5 class="text-center mb-2">Custom Box</h5>
-    <p class="text-muted">Testing Purposes</p>
+<div class="box shadow-sm border p-3 custom-box">
+    <h5 class="text-center text-dark mb-2"><strong>Outstanding Sales Orders</strong></h5>
+    
+    <!-- Placeholder Content for Sales Orders -->
+    <ul class="list-group" style="font-size: 0.9rem;">
+        {% for sales_order in outstanding_sales_orders %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ sales_order.name }}</span>
+            <span class="badge bg-warning text-dark">{{ sales_order.delivery_date }}</span>
+            <span class="badge text-dark">{{ sales_order.customer }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No outstanding orders.</li>
+        {% endfor %}
+    </ul>
 </div>
+<div class="box shadow-sm border p-3 custom-box">
+    <h5 class="text-center text-dark mb-2"><strong>Customer Outstanding</strong></h5>
+    
+    <!-- List of Customers with Outstanding Amounts -->
+    <ul class="list-group" style="font-size: 0.9rem; max-height: 150px; overflow-y: auto;">
+        {% for customer in customer_outstanding %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ customer.customer }}</span>
+            <span class="badge bg-danger text-light">₹{{ "{:,.2f}".format(customer.outstanding_total) }}</span>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No outstanding amounts.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
 
 
 <!-- Modal for Operations Timeline -->

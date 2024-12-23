@@ -53,3 +53,30 @@ def get_context(context):
 
     # Pass data to context
     context.combined_data = combined_data
+
+    # Fetch outstanding sales orders
+    outstanding_sales_orders = frappe.db.get_list(
+        'Sales Order',
+        filters={
+            'status': ['not in', ['Completed', 'Cancelled']],
+            'docstatus': 1  # Ensure the sales order is submitted
+        },
+        fields=['name', 'customer', 'transaction_date', 'grand_total', 'status','delivery_date']
+    )
+    context.outstanding_sales_orders = outstanding_sales_orders
+    # Fetch outstanding amounts for each customer
+    customer_outstanding = frappe.db.sql(
+        """
+        SELECT 
+            customer, 
+            SUM(outstanding_amount) AS outstanding_total
+        FROM 
+            `tabSales Invoice`
+        WHERE 
+            docstatus = 1 AND outstanding_amount > 0
+        GROUP BY 
+            customer
+        """,
+        as_dict=True
+    )
+    context.customer_outstanding = customer_outstanding
