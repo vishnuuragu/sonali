@@ -12,7 +12,7 @@
 <!-- Container for all the boxes -->
 <div class="d-flex flex-wrap justify-content-start align-items-start gap-2 mt-4">
     <!-- Stock Details Box -->
-    <div class="box shadow-sm border p-3" style="width: 250px; border-radius: 10px; font-size: 0.75rem;">
+    <div class="box custom-box shadow-sm border p-3">
         <h5 class="text-center mb-2" style="font-size: 0.85rem;">Stock Locations</h5>
     
         <!-- Compact Stock Items Grid -->
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Work Order Box -->
-    <div id="work-order-single-timeline" class="box shadow-sm border p-3" style="width: 250px; border-radius: 10px; font-size: 0.75rem;">
+    <div id="work-order-single-timeline" class="box custom-box shadow-sm border p-3">
         <h5 class="text-center text-dark mb-2" style="font-size: 0.85rem;"><strong>{{ combined_data[0].name }}</strong></h5>
         
         <p class="text-muted mb-1"><strong>Status:</strong> 
@@ -79,6 +79,12 @@
         </button>
     </div>
 </div>
+
+<div class="box custom-box shadow-sm border p-3">
+    <h5 class="text-center mb-2">Custom Box</h5>
+    <p class="text-muted">Testing Purposes</p>
+</div>
+
 
 <!-- Modal for Operations Timeline -->
 <div class="modal fade" id="timelineModal" tabindex="-1" aria-labelledby="timelineModalLabel" aria-hidden="true">
