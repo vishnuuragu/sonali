@@ -9,9 +9,10 @@
 {% block footer %}{% endblock %} <!-- Remove footer -->
 
 {% block content %}
-<div class="container my-5 reports-container">
-    <!-- Stock Details Chart Section -->
-    <div class="stock-details-container" style="width: 250px; margin: 10px; border: 1px solid #ddd; padding: 10px; border-radius: 10px; font-size: 0.75rem;">
+<!-- Container for all the boxes -->
+<div class="d-flex flex-wrap justify-content-start align-items-start gap-2 mt-4">
+    <!-- Stock Details Box -->
+    <div class="box shadow-sm border p-3" style="width: 250px; border-radius: 10px; font-size: 0.75rem;">
         <h5 class="text-center mb-2" style="font-size: 0.85rem;">Stock Locations</h5>
     
         <!-- Compact Stock Items Grid -->
@@ -20,21 +21,21 @@
             {% for stock in stock_details %}
                 {% if stock.item_code not in unique_items %}
                     {% set _ = unique_items.update({stock.item_code: stock.item_code}) %}
-            <div class="stock-item text-center p-1" style="cursor: pointer; flex: 0 1 calc(45% - 5px); background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; font-size: 0.7rem;"
-                 onclick="updatePieChart('{{ stock.item_code }}')">
-                <span class="text-primary">{{ stock.item_code }}</span>
-            </div>
+                    <div class="stock-item text-center p-1" style="cursor: pointer; flex: 0 1 calc(45% - 5px); background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; font-size: 0.7rem;"
+                        onclick="updatePieChart('{{ stock.item_code }}')">
+                        <span class="text-primary">{{ stock.item_code }}</span>
+                    </div>
                 {% endif %}
             {% endfor %}
         </div>
-    
+
         <!-- Pie Chart Section -->
         <div class="text-center mt-2">
             <canvas id="stockPieChart" width="120" height="120"></canvas>
         </div>
-    
+
         <!-- Stock Details Table (Hidden Initially) -->
-        <div class="stock-details-table mt-2" id="stockDetailsTable" style="display: none;">
+        <!-- <div class="stock-details-table mt-2" id="stockDetailsTable" style="display: none;">
             <h6 class="text-center text-info mb-1" style="font-size: 0.75rem;">Stock Details</h6>
             <table class="table table-sm table-bordered" style="font-size: 0.65rem;">
                 <thead>
@@ -44,77 +45,66 @@
                     </tr>
                 </thead>
                 <tbody id="stockDetailsBody">
-                    <!-- Stock data rows will be populated dynamically -->
                 </tbody>
             </table>
+        </div> -->
+    </div>
+
+    <!-- Work Order Box -->
+    <div id="work-order-single-timeline" class="box shadow-sm border p-3" style="width: 250px; border-radius: 10px; font-size: 0.75rem;">
+        <h5 class="text-center text-dark mb-2" style="font-size: 0.85rem;"><strong>{{ combined_data[0].name }}</strong></h5>
+        
+        <p class="text-muted mb-1"><strong>Status:</strong> 
+            <span class="badge {% if combined_data[0].status == 'Completed' %}bg-success{% elif combined_data[0].status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
+                {{ combined_data[0].status }}
+            </span>
+        </p>
+        <p class="text-info mb-1"><strong>Production Item:</strong> {{ combined_data[0].production_item }}</p>
+        <p class="text-primary mb-3"><strong>Quantity:</strong> {{ combined_data[0].qty }}</p>
+
+        <!-- Progress Bar -->
+        <div class="progress" style="height: 12px;">
+            <div class="progress-bar {% if combined_data[0].progress == 100 %}bg-success{% else %}bg-warning{% endif %}" 
+                 role="progressbar" 
+                 style="width: {{ combined_data[0].progress }}%;" 
+                 aria-valuenow="{{ combined_data[0].progress }}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="100">
+            </div>
+        </div>
+
+        <!-- Button for Popup -->
+        <button class="btn btn-primary btn-sm mt-3" id="view-timeline-button">
+            <i class="bi bi-chevron-down"></i> View Operations Timeline
+        </button>
+    </div>
+</div>
+
+<!-- Modal for Operations Timeline -->
+<div class="modal fade" id="timelineModal" tabindex="-1" aria-labelledby="timelineModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="timelineModalLabel">Operations Timeline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="timeline">
+                    {% for operation in combined_data[0].operations %}
+                    <li class="{% if operation.status == 'Completed' %}completed{% else %}pending{% endif %}">
+                        <strong>{{ operation.operation }}</strong>
+                        <p class="text-muted">Status: {{ operation.status }}</p>
+                        <p class="text-muted">Employee: {{ operation.employee or 'Not Assigned' }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
-    
-
-    <div id="work-orders-timeline" class="container">
-        <h2 class="text-center mb-4">Work order Timeline</h2>
-    
-        <!-- Work Order Cards -->
-        <div class="row row-cols-1 g-4">
-            {% for work_order in combined_data %}
-            <div class="col">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="card-title text-dark"><strong>{{ work_order.name }}</strong></h5>
-                        <p class="card-text text-muted mb-1"><strong>Status:</strong> 
-                            <span class="badge {% if work_order.status == 'Completed' %}bg-success{% elif work_order.status == 'In Progress' %}bg-warning{% else %}bg-danger{% endif %}">
-                                {{ work_order.status }}
-                            </span>
-                        </p>
-                        <p class="card-text text-info mb-1"><strong>Production Item:</strong> {{ work_order.production_item }}</p>
-                        <p class="card-text text-primary"><strong>Quantity:</strong> {{ work_order.qty }}</p>
-    
-                        <!-- Progress Bar -->
-                        <div class="progress my-3" style="height: 20px;">
-                            <div class="progress-bar {% if work_order.progress == 100 %}bg-success{% else %}bg-warning{% endif %}" 
-                                 role="progressbar" 
-                                 style="width: {{ work_order.progress }}%;" 
-                                 aria-valuenow="{{ work_order.progress }}" 
-                                 aria-valuemin="0" 
-                                 aria-valuemax="100">
-                                {{ work_order.progress }}%
-                            </div>
-                        </div>
-    
-                        <!-- Expandable Operations Timeline -->
-                        <button class="btn btn-link text-decoration-none p-0 mb-3 toggle-timeline" type="button" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#timeline-{{ work_order.name }}" 
-                                aria-expanded="false" 
-                                aria-controls="timeline-{{ work_order.name }}">
-                            <i class="bi bi-chevron-down"></i> View Operations Timeline
-                        </button>
-    
-                        <div class="collapse" id="timeline-{{ work_order.name }}">
-                            <ul class="timeline">
-                                {% for operation in work_order.operations %}
-                                <li class="{% if operation.status == 'Completed' %}completed{% else %}pending{% endif %}">
-                                    <strong>{{ operation.operation }}</strong>
-                                    <p class="text-muted">Status: {{ operation.status }}</p>
-                                    <p class="text-muted">Employee: {{ operation.employee or 'Not Assigned' }}</p>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>    
-
-    
-    
-    <!-- Bottom Gap -->
-    <div style="margin-bottom: 50px;"></div>
-    
-    
 </div>
+
+<!-- Bottom Gap -->
+<div style="margin-bottom: 50px;"></div>
 
 <!-- Include Chart.js from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -189,12 +179,9 @@
         document.getElementById('stockDetailsTable').style.display = 'block';
     }
     // For Expand button in Work order and Job cards
-    document.querySelectorAll('.toggle-timeline').forEach(button => {
-        button.addEventListener('click', function () {
-            const icon = this.querySelector('i');
-            const expanded = this.getAttribute('aria-expanded') === 'true';
-            icon.style.transform = expanded ? 'rotate(0)' : 'rotate(180deg)';
-        });
+    document.getElementById('view-timeline-button').addEventListener('click', function() {
+        var modal = new bootstrap.Modal(document.getElementById('timelineModal'));
+        modal.show();
     });
 </script>
 
