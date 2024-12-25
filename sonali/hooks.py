@@ -261,6 +261,9 @@ fixtures = [
     {
         "doctype": "Print Format",
     },
+    {
+        "doctype": "Manufacturing Settings",
+    },
     {"dt": "Operation", "filters": []},
     {"dt": "Workstation", "filters": []},
     {"dt": "Employee", "filters": []},
