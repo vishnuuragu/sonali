@@ -10,9 +10,9 @@
 
 {% block content %}
 <!-- Container for all the boxes -->
-<div class="d-flex flex-wrap justify-content-start align-items-start gap-2 mt-4">
+<div class="container">
     <!-- Stock Details Box -->
-    <div class="box custom-box shadow-sm border p-3">
+    <div class="box">
         <h5 class="text-center mb-2" style="font-size: 0.85rem;">Stock Locations</h5>
     
         <!-- Compact Stock Items Grid -->
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Work Order Box -->
-    <div id="work-order-single-timeline" class="box custom-box shadow-sm border p-3">
+    <div id="work-order-single-timeline" class="box">
         <h5 class="text-center text-dark mb-2" style="font-size: 0.85rem;"><strong>{{ combined_data[0].name }}</strong></h5>
         
         <p class="text-muted mb-1"><strong>Status:</strong> 
@@ -78,9 +78,9 @@
             <i class="bi bi-chevron-down"></i> View Operations Timeline
         </button>
     </div>
-</div>
 
-<div class="box shadow-sm border p-3 custom-box">
+
+<div class="box">
     <h5 class="text-center text-dark mb-2"><strong>Outstanding Sales Orders</strong></h5>
     
     <!-- Placeholder Content for Sales Orders -->
@@ -96,7 +96,7 @@
         {% endfor %}
     </ul>
 </div>
-<div class="box shadow-sm border p-3 custom-box">
+<div class="box">
     <h5 class="text-center text-dark mb-2"><strong>Customer Outstanding</strong></h5>
     
     <!-- List of Customers with Outstanding Amounts -->
@@ -136,6 +136,29 @@
         </div>
     </div>
 </div>
+
+<div class="box">
+    <h5 class="text-center text-dark mb-2"><strong>Pending Tasks</strong></h5>
+    
+    <!-- List of Pending Tasks -->
+    <ul class="list-group" style="font-size: 0.7rem; max-height: 150px; overflow-y: auto;">
+        {% for task in pending_tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+                <strong>{{ task.type }}</strong>
+                <p class="text-muted mb-0" style="font-size: 0.65rem;">Assigned to: {{ task.assigned_to }}</p>
+                <p class="text-muted mb-0" style="font-size: 0.65rem;">Due: {{ task.exp_end_date }}</p>
+                <p class="text-muted mb-0" style="font-size: 0.65rem;">Status: {{ task.status }}</p>
+            </div>
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">No pending tasks.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+</div>
+
 
 <!-- Bottom Gap -->
 <div style="margin-bottom: 50px;"></div>

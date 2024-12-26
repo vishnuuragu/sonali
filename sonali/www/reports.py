@@ -64,6 +64,7 @@ def get_context(context):
         fields=['name', 'customer', 'transaction_date', 'grand_total', 'status','delivery_date']
     )
     context.outstanding_sales_orders = outstanding_sales_orders
+
     # Fetch outstanding amounts for each customer
     customer_outstanding = frappe.db.sql(
         """
@@ -80,3 +81,13 @@ def get_context(context):
         as_dict=True
     )
     context.customer_outstanding = customer_outstanding
+
+    # Fetch pending tasks and assigned users
+    pending_tasks = frappe.db.get_list(
+        'Task',
+        filters={
+            'status': ['not in', ['Completed', 'Cancelled']]
+        },
+        fields=['type', 'exp_end_date', 'status', 'assigned_to']
+    )
+    context.pending_tasks = pending_tasks
