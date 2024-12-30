@@ -80,37 +80,52 @@
     </div>
 
 
-<div class="box">
-    <h5 class="text-center text-dark mb-2"><strong>Outstanding Sales Orders</strong></h5>
+    <div class="box">
+        <h5 class="text-center text-dark mb-2"><strong>Outstanding Sales Orders</strong></h5>
+        
+        <!-- Placeholder Content for Sales Orders -->
+        <ul class="list-group" style="font-size: 0.9rem;">
+            {% for sales_order in outstanding_sales_orders %}
+            <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{ sales_order.name }}" style="cursor: pointer;">
+                <span>{{ sales_order.name }}</span>
+                <span class="badge bg-warning text-dark">{{ sales_order.delivery_date }}</span>
+            </li>
+            <!-- Hidden Detail Box -->
+            <div class="sales-order-details bg-light border p-2" id="details-{{ sales_order.name }}" style="display: none; position: absolute; z-index: 10; max-width: 300px; border-radius: 8px;">
+                <p><strong>Order ID:</strong> {{ sales_order.name }}</p>
+                <p><strong>Customer:</strong> {{ sales_order.customer }}</p>
+                <p><strong>Delivery Date:</strong> {{ sales_order.delivery_date }}</p>
+                <p><strong>Status:</strong> {{ sales_order.status }}</p>
+            </div>
+            {% else %}
+            <li class="list-group-item text-muted">No outstanding orders.</li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    <!-- Placeholder Content for Sales Orders -->
-    <ul class="list-group" style="font-size: 0.9rem;">
-        {% for sales_order in outstanding_sales_orders %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>{{ sales_order.name }}</span>
-            <span class="badge bg-warning text-dark">{{ sales_order.delivery_date }}</span>
-            <span class="badge text-dark">{{ sales_order.customer }}</span>
-        </li>
-        {% else %}
-        <li class="list-group-item text-muted">No outstanding orders.</li>
-        {% endfor %}
-    </ul>
-</div>
-<div class="box">
-    <h5 class="text-center text-dark mb-2"><strong>Customer Outstanding</strong></h5>
+    <div class="box">
+        <h5 class="text-center text-dark mb-2"><strong>Customer Outstanding</strong></h5>
+        
+        <!-- List of Customers with Outstanding Amounts -->
+        <ul class="list-group" style="font-size: 0.9rem; max-height: 150px; overflow-y: auto;">
+            {% for customer in customer_outstanding %}
+            <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{ customer.customer }}" style="cursor: pointer;">
+                <span>{{ customer.customer }}</span>
+                <span class="badge bg-danger text-light">₹{{ "{:,.2f}".format(customer.outstanding_total) }}</span>
+            </li>
+            <!-- Hidden Detail Box -->
+            <div class="customer-details bg-light border p-2" id="details-{{ customer.customer }}" style="display: none; position: absolute; z-index: 10; max-width: 300px; border-radius: 8px;">
+                <p><strong>Customer ID:</strong> {{ customer.name }}</p>
+                <p><strong>Customer Name:</strong> {{ customer.customer }}</p>
+                <p><strong>Outstanding Amount:</strong> ₹{{ "{:,.2f}".format(customer.outstanding_total) }}</p>
+                <p><strong>Status:</strong> {{ customer.status or 'N/A' }}</p>
+            </div>
+            {% else %}
+            <li class="list-group-item text-muted">No outstanding amounts.</li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    <!-- List of Customers with Outstanding Amounts -->
-    <ul class="list-group" style="font-size: 0.9rem; max-height: 150px; overflow-y: auto;">
-        {% for customer in customer_outstanding %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>{{ customer.customer }}</span>
-            <span class="badge bg-danger text-light">₹{{ "{:,.2f}".format(customer.outstanding_total) }}</span>
-        </li>
-        {% else %}
-        <li class="list-group-item text-muted">No outstanding amounts.</li>
-        {% endfor %}
-    </ul>
-</div>
 
 
 
@@ -240,6 +255,45 @@
         var modal = new bootstrap.Modal(document.getElementById('timelineModal'));
         modal.show();
     });
+
+    // Attach click event listeners to list items
+document.querySelectorAll('.list-group-item').forEach(item => {
+    item.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent event bubbling to the document
+
+        // Hide any currently visible detail box
+        document.querySelectorAll('.sales-order-details').forEach(detailBox => {
+            detailBox.style.display = 'none';
+        });
+        document.querySelectorAll('.customer-details').forEach(detailBox => {
+            detailBox.style.display = 'none';
+        });
+
+        // Show the corresponding detail box
+        const detailId = `details-${this.getAttribute('data-id')}`;
+        const detailBox = document.getElementById(detailId);
+        if (detailBox) {
+            const rect = this.getBoundingClientRect();
+            detailBox.style.top = `${rect.bottom + window.scrollY}px`;
+            detailBox.style.left = `${rect.left + window.scrollX}px`;
+            detailBox.style.display = 'block';
+        }
+    });
+});
+
+// Hide detail box when clicking outside
+document.addEventListener('click', function() {
+    document.querySelectorAll('.sales-order-details').forEach(detailBox => {
+        detailBox.style.display = 'none';
+    });
+});
+// Hide detail box when clicking outside
+document.addEventListener('click', function() {
+    document.querySelectorAll('.customer-details').forEach(detailBox => {
+        detailBox.style.display = 'none';
+    });
+});
+
 </script>
 
 <!-- Bootstrap JS (required for collapse functionality) -->

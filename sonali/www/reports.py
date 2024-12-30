@@ -70,7 +70,9 @@ def get_context(context):
         """
         SELECT 
             customer, 
-            SUM(outstanding_amount) AS outstanding_total
+            SUM(outstanding_amount) AS outstanding_total,
+            name,
+            status
         FROM 
             `tabSales Invoice`
         WHERE 
