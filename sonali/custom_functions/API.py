@@ -97,7 +97,12 @@ def update_status_by_uuid(custom_uuid, custom_redeem):
             "message": f"Serial No {serial_no} is already marked as redeemed."
         })
         return
-
+    if current_redeem_status == 1 and int(custom_redeem) == 0:
+        frappe.response.update({
+            "status": 400,
+            "message": f"Serial No {serial_no} is already marked as redeemed and value can't be changed"
+        })
+        return
     # Update the status field in Serial No
     serial_doc = frappe.get_doc("Serial No", serial_no)
     serial_doc.custom_redeem = custom_redeem
