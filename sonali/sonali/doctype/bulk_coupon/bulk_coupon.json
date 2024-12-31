@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-12-31 14:29:00.502628",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "coupon_code_section",
+  "uuid",
+  "coupon_price",
+  "naming_series",
+  "isredeem",
+  "date_of_redeem",
+  "serial_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "coupon_code_section",
+   "fieldtype": "Section Break",
+   "label": "COUPON CODE"
+  },
+  {
+   "fieldname": "uuid",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "UUID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "coupon_price",
+   "fieldtype": "Float",
+   "label": "COUPON PRICE",
+   "non_negative": 1,
+   "precision": "0"
+  },
+  {
+   "default": "CPN-.MM.-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "no_copy": 1,
+   "options": "CPN-.MM.-.YYYY.-",
+   "print_hide": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "isredeem",
+   "fieldtype": "Check",
+   "label": "isRedeem"
+  },
+  {
+   "fieldname": "date_of_redeem",
+   "fieldtype": "Datetime",
+   "label": "Date of Redeem"
+  },
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Link",
+   "label": "Serial Number",
+   "options": "Serial No"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-31 15:03:17.409567",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "Bulk Coupon",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
