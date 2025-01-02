@@ -31,5 +31,16 @@
   "name": "Dynamic Filtering on link field on Job card",
   "script": "frappe.ui.form.on(\"Job Card\", {\r\n    refresh: function(frm) {\r\n        let operation = frm.doc.operation;\r\n        if (operation === \"Packaging\") {\r\n                group = \"Packaging Team\";\r\n            } \r\n        else if (operation === \"Annealing\") {\r\n                group = \"Annealing Team\";\r\n            } \r\n        else if (operation === \"Bunching\") {\r\n                group = \"Bunching Team\";\r\n            } \r\n        else if (operation === \"Insulation\") {\r\n                group = \"Insulation Team\";\r\n            }\r\n        frm.set_query('employee', () => {\r\n    return {\r\n        filters: {\r\n            custom_employee_group: group\r\n        }\r\n    };\r\n        });\r\n    }\r\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Bulk Coupon",
+  "enabled": 1,
+  "modified": "2024-12-31 15:57:00.538523",
+  "module": "Sonali",
+  "name": "Bulk coupon code",
+  "script": "frappe.listview_settings['Bulk Coupon'] = {\r\n    onload: function(listview) {\r\n        listview.page.add_inner_button(__('Create Bulk Data'), function() {\r\n            frappe.prompt([\r\n                {\r\n                    fieldname: 'number_of_coupons',\r\n                    label: 'Number of Coupons',\r\n                    fieldtype: 'Int',\r\n                    reqd: 1\r\n                },\r\n                {\r\n                    fieldname: 'coupon_amount',\r\n                    label: 'Coupon Amount',\r\n                    fieldtype: 'Int',\r\n                    reqd: 1\r\n                }\r\n            ], function(values) {\r\n                frappe.call({\r\n                    method: 'sonali.custom_functions.Bulk_coupon.create_bulk_data',\r\n                    args: {\r\n                        number_of_coupons: values.number_of_coupons,\r\n                        coupon_amount: values.coupon_amount\r\n                    },\r\n                    callback: function(response) {\r\n                        if (response.message) {\r\n                            frappe.msgprint(__('Bulk data created successfully!'));\r\n                            listview.refresh();\r\n                        }\r\n                    }\r\n                });\r\n            }, __('Create Bulk Data'), __('Create'));\r\n        });\r\n    }\r\n};\r\n",
+  "view": "List"
  }
 ]
