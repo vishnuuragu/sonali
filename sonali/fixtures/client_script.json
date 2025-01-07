@@ -42,5 +42,16 @@
   "name": "Bulk coupon code",
   "script": "frappe.listview_settings['Bulk Coupon'] = {\r\n    onload: function(listview) {\r\n        listview.page.add_inner_button(__('Create Bulk Data'), function() {\r\n            frappe.prompt([\r\n                {\r\n                    fieldname: 'number_of_coupons',\r\n                    label: 'Number of Coupons',\r\n                    fieldtype: 'Int',\r\n                    reqd: 1\r\n                },\r\n                {\r\n                    fieldname: 'coupon_amount',\r\n                    label: 'Coupon Amount',\r\n                    fieldtype: 'Int',\r\n                    reqd: 1\r\n                }\r\n            ], function(values) {\r\n                frappe.call({\r\n                    method: 'sonali.custom_functions.Bulk_coupon.create_bulk_data',\r\n                    args: {\r\n                        number_of_coupons: values.number_of_coupons,\r\n                        coupon_amount: values.coupon_amount\r\n                    },\r\n                    callback: function(response) {\r\n                        if (response.message) {\r\n                            frappe.msgprint(__('Bulk data created successfully!'));\r\n                            listview.refresh();\r\n                        }\r\n                    }\r\n                });\r\n            }, __('Create Bulk Data'), __('Create'));\r\n        });\r\n    }\r\n};\r\n",
   "view": "List"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Work Order",
+  "enabled": 1,
+  "modified": "2025-01-07 12:22:08.962252",
+  "module": "Sonali",
+  "name": "Add Custom Batch Size",
+  "script": "frappe.ui.form.on('Work Order', {\r\n    refresh: function(frm) {\r\n        frm.add_custom_button(__('Create Batches'), function() {\r\n            frappe.call({\r\n                method: \"sonali.custom_functions.batch_customization.create_batches\",\r\n                args: { work_order: frm.doc.name },\r\n                callback: function(r) {\r\n                    if (r.message) {\r\n                        frappe.msgprint(__('Batches Created: ' + r.message.join(', ')));\r\n                    }\r\n                }\r\n            });\r\n        });\r\n    }\r\n});\r\n",
+  "view": "Form"
  }
 ]
