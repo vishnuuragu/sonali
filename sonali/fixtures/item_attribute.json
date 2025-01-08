@@ -1,0 +1,126 @@
+[
+ {
+  "attribute_name": "Size",
+  "docstatus": 0,
+  "doctype": "Item Attribute",
+  "from_range": 0.0,
+  "increment": 0.0,
+  "item_attribute_values": [
+   {
+    "abbr": "XS",
+    "attribute_value": "Extra Small",
+    "parent": "Size",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "S",
+    "attribute_value": "Small",
+    "parent": "Size",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "M",
+    "attribute_value": "Medium",
+    "parent": "Size",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "L",
+    "attribute_value": "Large",
+    "parent": "Size",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "XL",
+    "attribute_value": "Extra Large",
+    "parent": "Size",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   }
+  ],
+  "modified": "2024-12-30 18:25:18.226402",
+  "name": "Size",
+  "numeric_values": 0,
+  "to_range": 0.0
+ },
+ {
+  "attribute_name": "Colour",
+  "docstatus": 0,
+  "doctype": "Item Attribute",
+  "from_range": 0.0,
+  "increment": 0.0,
+  "item_attribute_values": [
+   {
+    "abbr": "RED",
+    "attribute_value": "RED",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "YELLOW",
+    "attribute_value": "YELLOW",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "BLUE",
+    "attribute_value": "BLUE",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "BLACK",
+    "attribute_value": "BLACK",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "GREEN",
+    "attribute_value": "GREEN",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "WHITE",
+    "attribute_value": "WHITE",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "GREY",
+    "attribute_value": "GREY",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "ORANGE",
+    "attribute_value": "ORANGE",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "YELLOW/GREEN",
+    "attribute_value": "YELLOW/GREEN",
+    "parent": "Colour",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   }
+  ],
+  "modified": "2025-01-08 14:45:44.250492",
+  "name": "Colour",
+  "numeric_values": 0,
+  "to_range": 0.0
+ }
+]

@@ -271,7 +271,8 @@ fixtures = [
     {"doctype": "BOM"},
     {"dt": "Workstation Type", "filters": []},
     {"dt": "Employee Group", "filters": []},
-    {"dt": "Quality Inspection Template", "filters": []}
+    {"dt": "Quality Inspection Template", "filters": []},
+    {"dt": "Item Attribute", "filters": []},
 ]
 
 website_generators = []
