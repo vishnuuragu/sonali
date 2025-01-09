@@ -1,0 +1,8 @@
+.navbar-brand img {
+    content: url('/assets/sonali/images/custom_logo.png');
+    height: 40px; /* Adjust as necessary */
+}
+.navbar-home img {
+    max-height: 40px;
+    width: auto;
+}

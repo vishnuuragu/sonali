@@ -25,7 +25,7 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/sonali/css/sonali.css"
+app_include_css = "/assets/sonali/css/sonali.css"
 # app_include_js = "/assets/sonali/js/sonali.js"
 
 # include js, css files in header of web template
@@ -283,3 +283,7 @@ web_routes = [
         "page": "reports"
     }
 ]
+
+website_context = {
+    "favicon": "/assets/sonali/images/favicon.ico"
+}
