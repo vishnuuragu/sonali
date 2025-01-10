@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-10 15:14:46.575348",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "packaging_slip_section",
+  "packing_table",
+  "customer_name",
+  "date"
+ ],
+ "fields": [
+  {
+   "fieldname": "packaging_slip_section",
+   "fieldtype": "Section Break",
+   "label": "PACKAGING SLIP"
+  },
+  {
+   "fieldname": "packing_table",
+   "fieldtype": "Table",
+   "label": "Packing table",
+   "options": "Child Packaging Slip"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "CUSTOMER NAME"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "DATE"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-10 16:02:53.408425",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "Packaging Slip",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
