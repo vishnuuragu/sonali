@@ -7,8 +7,9 @@
  "field_order": [
   "packaging_slip_section",
   "packing_table",
-  "customer_name",
-  "date"
+  "customer_code",
+  "date",
+  "vehicle_number"
  ],
  "fields": [
   {
@@ -23,20 +24,29 @@
    "options": "Child Packaging Slip"
   },
   {
-   "fieldname": "customer_name",
-   "fieldtype": "Data",
-   "label": "CUSTOMER NAME"
-  },
-  {
    "default": "Today",
    "fieldname": "date",
-   "fieldtype": "Datetime",
+   "fieldtype": "Date",
    "label": "DATE"
+  },
+  {
+   "fieldname": "customer_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "CUSTOMER CODE",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_number",
+   "fieldtype": "Data",
+   "label": "Vehicle Number",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-10 16:02:53.408425",
+ "modified": "2025-01-10 18:18:31.461085",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Packaging Slip",
