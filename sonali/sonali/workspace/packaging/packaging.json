@@ -1,0 +1,67 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"wqg3ahdkCE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Packaging</span>\",\"col\":12}},{\"id\":\"KIj1bre3ZP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Packaging Batch\",\"col\":12}},{\"id\":\"G0ceezfo5b\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Packaging Slip\",\"col\":12}}]",
+ "creation": "2025-01-21 14:03:02.422283",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "stock",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Packaging",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PACKING LABEL",
+   "link_count": 0,
+   "link_to": "Packaging Batch",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PACKAGING TO CUSTOMER",
+   "link_count": 0,
+   "link_to": "Packaging Slip",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-01-22 10:16:15.342369",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "Packaging",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 18.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Packaging Batch",
+   "link_to": "Packaging Batch",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Packaging Slip",
+   "link_to": "Packaging Slip",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Packaging"
+}
