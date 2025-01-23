@@ -1,0 +1,196 @@
+{% extends "templates/web.html" %}
+
+{% macro email_login_body() -%}
+{% if not disable_user_pass_login or (ldap_settings and ldap_settings.enabled) %}
+<div class="page-card-body">
+    <div class="form-group">
+        <label class="form-label" for="login_email">{{ login_label or _("Email Address") }}</label>
+        <div class="email-field">
+            <input type="text" id="login_email" class="form-control bold-input"
+                placeholder="{% if login_name_placeholder %}{{ login_name_placeholder }}{% else %}{{ _('jane@example.com') }}{% endif %}"
+                required autofocus autocomplete="username">
+
+            <svg class="field-icon email-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <use class="es-lock" href="#es-line-email"></use>
+            </svg>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="login_password">{{ _("Password") }}</label>
+        <div class="password-field">
+            <input type="password" id="login_password" class="form-control bold-input" placeholder="•••••"
+                autocomplete="current-password" required>
+
+            <svg class="field-icon password-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <use class="es-lock" href="#es-line-lock"></use>
+            </svg>
+            <span toggle="#login_password" class="toggle-password text-muted">{{ _('Show') }}</span>
+        </div>
+    </div>
+
+    <p class="forgot-password-message text-center">
+        <a href="#forgot" class="forgot-link">{{ _("Forgot Password?") }}</a>
+    </p>
+</div>
+{% endif %}
+<div class="page-card-actions">
+    {% if not disable_user_pass_login %}
+    <button class="btn btn-lg btn-primary btn-block btn-login" type="submit">
+        {{ _("Login") }}
+    </button>
+    {% endif %}
+    {% if ldap_settings and ldap_settings.enabled %}
+    <button class="btn btn-lg btn-secondary btn-block btn-login btn-ldap-login">
+        {{ _("Login with LDAP") }}
+    </button>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% block head_include %}
+{{ include_style('login.bundle.css') }}
+<style>
+    .form-control.bold-input {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 12px 15px;
+        border: 2px solid #ced4da;
+        border-radius: 8px;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .btn-lg {
+        font-size: 1.25rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .forgot-link {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #007bff;
+    }
+
+    .page-card-body {
+        padding: 20px;
+    }
+
+    .page-card-head {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .app-logo {
+        width: 200px;
+        height: 150px;
+        margin-bottom: 15px;
+    }
+
+    .page-card-actions {
+        margin-top: 20px;
+    }
+
+    .toggle-password {
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: #6c757d;
+        margin-left: 8px;
+    }
+
+    .toggle-password:hover {
+        text-decoration: underline;
+    }
+
+    .forgot-password-message {
+        margin-top: 10px;
+    }
+
+    .social-login-buttons .btn {
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+    .login-divider {
+        margin: 20px 0;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% macro logo_section(title=null) %}
+<div class="page-card-head">
+    <img class="app-logo" src="/assets/sonali/images/custom_logo.png" alt="Logo">
+    {% if title %}
+    <h4 class="text-primary">{{ _(title) }}</h4>
+    {% else %}
+    <h4 class="text-primary">{{ _('Login to {0}').format(app_name or _("Sonali ERP")) }}</h4>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{% block page_content %}
+<div>
+    <noscript>
+        <div class="text-center my-5">
+            <h4>{{ _("Javascript is disabled on your browser") }}</h4>
+            <p class="text-muted">
+                {{ _("You need to enable JavaScript for your app to work.") }}<br>{{ _("To enable it follow the instructions in the following link: {0}").format("<a href='https://enable-javascript.com/'>enable-javascript.com</a></p>") }}
+        </div>
+    </noscript>
+    <section class='for-login'>
+        {{ logo_section() }}
+        <div class="login-content page-card">
+            <form class="form-signin form-login" role="form">
+                {{ email_login_body() }}
+            </form>
+        </div>
+    </section>
+
+    <section class='for-forgot'>
+        {{ logo_section('Forgot Password') }}
+        <div class="login-content page-card">
+            <form class="form-signin form-forgot hide" role="form">
+                <div class="page-card-body">
+                    <div class="email-field">
+                        <label class="form-label" for="forgot_email">{{ _("Email Address") }}</label>
+                        <input type="email" id="forgot_email" class="form-control bold-input"
+                            placeholder="{{ _('Enter your email') }}" required autofocus autocomplete="username">
+                    </div>
+                </div>
+                <div class="page-card-actions">
+                    <button class="btn btn-lg btn-primary btn-block btn-forgot"
+                        type="submit">{{ _("Reset Password") }}</button>
+                    <p class="text-center sign-up-message">
+                        <a href="#login" class="forgot-link">{{ _("Back to Login") }}</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>{% include "templates/includes/login/login.js" %}</script>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
