@@ -264,12 +264,6 @@ fixtures = [
     {
         "doctype": "Manufacturing Settings",
     },
-    {"dt": "Operation", "filters": []},
-    {"dt": "Workstation", "filters": []},
-    {"dt": "Employee", "filters": []},
-    {"doctype": "Item"},
-    {"doctype": "BOM"},
-    {"dt": "Workstation Type", "filters": []},
     {"dt": "Employee Group", "filters": []},
     {"dt": "Quality Inspection Template", "filters": []},
     {"dt": "Item Attribute", "filters": []},
