@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "batch_id",
+  "item_name",
   "serial_nos",
   "weight",
   "size_mm",
@@ -49,11 +50,17 @@
    "fieldtype": "Select",
    "label": "Stock Option",
    "options": "Inventory\nWork Order"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "ITEM NAME",
+   "options": "Item"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-08 13:58:49.948711",
+ "modified": "2025-02-03 13:06:50.010611",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Packaging Batch",
