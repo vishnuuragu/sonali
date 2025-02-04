@@ -35,12 +35,12 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Work Order",
+  "dt": "Packaging Batch",
   "enabled": 1,
-  "modified": "2025-01-07 12:22:08.962252",
-  "module": "Sonali",
-  "name": "Add Custom Batch Size",
-  "script": "frappe.ui.form.on('Work Order', {\r\n    refresh: function(frm) {\r\n        frm.add_custom_button(__('Create Batches'), function() {\r\n            frappe.call({\r\n                method: \"sonali.custom_functions.batch_customization.create_batches\",\r\n                args: { work_order: frm.doc.name },\r\n                callback: function(r) {\r\n                    if (r.message) {\r\n                        frappe.msgprint(__('Batches Created: ' + r.message.join(', ')));\r\n                    }\r\n                }\r\n            });\r\n        });\r\n    }\r\n});\r\n",
+  "modified": "2025-02-03 14:43:36.992223",
+  "module": null,
+  "name": "Packaging Batch",
+  "script": "frappe.ui.form.on('Packaging Batch', {\r\n    refresh: function(frm) {\r\n        // Update the serial_no query when the form is refreshed\r\n        set_serial_no_query(frm);\r\n    },\r\n    item_name: function(frm) {\r\n        // When the item_name field changes, update the query\r\n        set_serial_no_query(frm);\r\n        console.log(frm.doc.item_name)\r\n        // Optionally refresh the child table to immediately show the effect\r\n        frm.refresh_field('serial_nos');\r\n    }\r\n});\r\n\r\nfunction set_serial_no_query(frm) {\r\n    // Ensure the child table exists before setting the query\r\n    if (frm.fields_dict['serial_nos']) {\r\n        if (frm.doc.item_name) {\r\n            // If an item is selected, apply the filter on item_code\r\n            frm.fields_dict['serial_nos'].grid.get_field('serial_no').get_query = function(doc, cdt, cdn) {\r\n                return {\r\n                    filters: {\r\n                        item_code: frm.doc.item_name\r\n                    }\r\n                };\r\n            };\r\n        } else {\r\n            // If no item is selected, remove the custom query to show all Serial No records\r\n            frm.fields_dict['serial_nos'].grid.get_field('serial_no').get_query = null;\r\n        }\r\n    } else {\r\n        console.warn(\"Child table field 'serial_nos' not found. Please verify the fieldname.\");\r\n    }\r\n}\r\n\n\nfrappe.ui.form.on('Serial for custom Batch', {\n\trefresh(frm) {\n\t\t// your code here\n\t}\n})",
   "view": "Form"
  }
 ]

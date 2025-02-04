@@ -6,6 +6,72 @@
    {
     "acceptance_formula": null,
     "formula_based_criteria": 0,
+    "max_value": 0.0,
+    "min_value": 0.0,
+    "numeric": 0,
+    "parameter_group": null,
+    "parent": "ANNEALING",
+    "parentfield": "item_quality_inspection_parameter",
+    "parenttype": "Quality Inspection Template",
+    "specification": "QC",
+    "value": "PASS"
+   }
+  ],
+  "modified": "2025-01-09 13:14:02.803418",
+  "name": "ANNEALING",
+  "quality_inspection_template_name": "ANNEALING"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Quality Inspection Template",
+  "item_quality_inspection_parameter": [
+   {
+    "acceptance_formula": null,
+    "formula_based_criteria": 0,
+    "max_value": 0.0,
+    "min_value": 0.0,
+    "numeric": 0,
+    "parameter_group": null,
+    "parent": "BUNCHING",
+    "parentfield": "item_quality_inspection_parameter",
+    "parenttype": "Quality Inspection Template",
+    "specification": "QC",
+    "value": "PASS"
+   }
+  ],
+  "modified": "2025-01-09 13:16:21.857764",
+  "name": "BUNCHING",
+  "quality_inspection_template_name": "BUNCHING"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Quality Inspection Template",
+  "item_quality_inspection_parameter": [
+   {
+    "acceptance_formula": null,
+    "formula_based_criteria": 0,
+    "max_value": 0.0,
+    "min_value": 0.0,
+    "numeric": 0,
+    "parameter_group": null,
+    "parent": "INSULATION",
+    "parentfield": "item_quality_inspection_parameter",
+    "parenttype": "Quality Inspection Template",
+    "specification": "QC",
+    "value": "PASS"
+   }
+  ],
+  "modified": "2025-01-09 13:16:13.896570",
+  "name": "INSULATION",
+  "quality_inspection_template_name": "INSULATION"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Quality Inspection Template",
+  "item_quality_inspection_parameter": [
+   {
+    "acceptance_formula": null,
+    "formula_based_criteria": 0,
     "max_value": 0.21,
     "min_value": 0.195,
     "numeric": 1,
