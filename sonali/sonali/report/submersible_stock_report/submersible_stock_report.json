@@ -1,0 +1,44 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-02-05 13:40:34.978077",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "test",
+ "letterhead": null,
+ "modified": "2025-02-05 13:40:34.978077",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "SUBMERSIBLE STOCK REPORT",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT \r\n    sub.`Product Code`,\r\n    sub.`Product Name`,\r\n    sub.Colour,\r\n    sub.`Coils/Drums`,\r\n    sub.Length\r\nFROM (\r\n    SELECT \r\n        i.variant_of AS `Product Code`,\r\n        i.item_name AS `Product Name`,\r\n        IFNULL(iv.attribute_value, 'TOTAL') AS Colour,\r\n        COUNT(sn.name) AS `Coils/Drums`,\r\n        SUM(IFNULL(sn.custom_length, 0)) AS Length,\r\n        CASE \r\n            WHEN iv.attribute_value IS NULL THEN 1 \r\n            ELSE 0 \r\n        END AS sort_order\r\n    FROM `tabSerial No` sn\r\n    JOIN `tabItem` i ON sn.item_code = i.name\r\n    LEFT JOIN `tabItem Variant Attribute` iv \r\n         ON i.name = iv.parent AND iv.attribute = 'Colour'\r\n    WHERE i.variant_of IS NOT NULL\r\n    GROUP BY i.variant_of, iv.attribute_value WITH ROLLUP\r\n    HAVING i.variant_of IS NOT NULL  -- This removes the grand total row\r\n) AS sub\r\nORDER BY \r\n    sub.`Product Code`,\r\n    sub.sort_order,\r\n    sub.Colour;\r\n",
+ "ref_doctype": "Bin",
+ "report_name": "SUBMERSIBLE STOCK REPORT",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Purchase User"
+  },
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Stock Manager"
+  },
+  {
+   "role": "Purchase Manager"
+  },
+  {
+   "role": "Sales Manager"
+  }
+ ],
+ "timeout": 0
+}
