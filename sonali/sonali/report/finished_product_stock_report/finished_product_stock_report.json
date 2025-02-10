@@ -10,7 +10,7 @@
  "is_standard": "Yes",
  "letter_head": "test",
  "letterhead": null,
- "modified": "2025-02-04 21:05:05.469130",
+ "modified": "2025-02-10 18:48:51.406608",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "FINISHED PRODUCT STOCK REPORT",
@@ -19,7 +19,7 @@
  "query": "SELECT \r\n    sub.`Product Code`,\r\n    sub.`Product Name`,\r\n    sub.Colour,\r\n    sub.`Coils/Drums`,\r\n    sub.Length\r\nFROM (\r\n    SELECT \r\n        i.variant_of AS `Product Code`,\r\n        i.item_name AS `Product Name`,\r\n        IFNULL(iv.attribute_value, 'TOTAL') AS Colour,\r\n        COUNT(sn.name) AS `Coils/Drums`,\r\n        SUM(IFNULL(sn.custom_length, 0)) AS Length,\r\n        CASE \r\n            WHEN iv.attribute_value IS NULL THEN 1 \r\n            ELSE 0 \r\n        END AS sort_order\r\n    FROM `tabSerial No` sn\r\n    JOIN `tabItem` i ON sn.item_code = i.name\r\n    LEFT JOIN `tabItem Variant Attribute` iv \r\n         ON i.name = iv.parent AND iv.attribute = 'Colour'\r\n    WHERE i.variant_of IS NOT NULL\r\n    GROUP BY i.variant_of, iv.attribute_value WITH ROLLUP\r\n    HAVING i.variant_of IS NOT NULL  -- This removes the grand total row\r\n) AS sub\r\nORDER BY \r\n    sub.`Product Code`,\r\n    sub.sort_order,\r\n    sub.Colour;\r\n",
  "ref_doctype": "Bin",
  "report_name": "FINISHED PRODUCT STOCK REPORT",
- "report_type": "Query Report",
+ "report_type": "Script Report",
  "roles": [
   {
    "role": "Sales User"
