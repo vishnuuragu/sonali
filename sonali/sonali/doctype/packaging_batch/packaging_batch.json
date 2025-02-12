@@ -7,6 +7,7 @@
  "field_order": [
   "batch_id",
   "item_name",
+  "item_name_fetch",
   "serial_nos",
   "weight",
   "size_mm",
@@ -56,11 +57,18 @@
    "fieldtype": "Link",
    "label": "ITEM NAME",
    "options": "Item"
+  },
+  {
+   "fetch_from": "item_name.item_name",
+   "fieldname": "item_name_fetch",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Item name fetch"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-03 13:06:50.010611",
+ "modified": "2025-02-11 16:01:16.357732",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Packaging Batch",
