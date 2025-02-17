@@ -13,7 +13,7 @@ def get_product_details_by_uuid(custom_uuid):
         return
 
     # Fetch the Serial No linked to the custom_uuid
-    fields = frappe.db.get_value("Bulk Coupon", {"uuid": custom_uuid}, ["name", "coupon_price", "isredeem", "serial_number","date_of_redeem"], as_dict=True)
+    fields = frappe.db.get_value("Bulk Coupon", {"uuid": custom_uuid}, ["name", "coupon_price", "isredeem", "serial_number","date_of_redeem","item_name"], as_dict=True)
     if not fields:
         frappe.response.update({
             "status": 404,
@@ -46,6 +46,7 @@ def get_product_details_by_uuid(custom_uuid):
         "status": 200,
         "custom_uuid": custom_uuid,
         "serial_no": serial_number,
+        "item_name": fields.item_name,
         "coupon_price": coupon_price,
         "is_redeem": fields.isredeem,
         "date_of_redeem": fields.date_of_redeem
@@ -72,7 +73,7 @@ def update_status_by_uuid(custom_uuid, custom_redeem):
         return
 
     # Fetch the Bulk Coupon linked to custom_uuid
-    bulk_coupon = frappe.db.get_value("Bulk Coupon", {"uuid": custom_uuid}, ["name", "isredeem"], as_dict=True)
+    bulk_coupon = frappe.db.get_value("Bulk Coupon", {"uuid": custom_uuid}, ["name", "isredeem","item_name"], as_dict=True)
     if not bulk_coupon:
         frappe.response.update({
             "status": 404,
@@ -115,6 +116,7 @@ def update_status_by_uuid(custom_uuid, custom_redeem):
         "status": 200,
         "message": f"Bulk Coupon {bulk_coupon.name} updated successfully.",
         "custom_uuid": custom_uuid,
+        "item_name": bulk_coupon.item_name,
         "is_redeem": custom_redeem,
         "date_of_redeem": bulk_coupon_doc.date_of_redeem
     })

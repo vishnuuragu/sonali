@@ -13,7 +13,8 @@
   "isredeem",
   "date_of_redeem",
   "serial_number",
-  "qr_image"
+  "qr_image",
+  "item_name"
  ],
  "fields": [
   {
@@ -68,11 +69,18 @@
    "fieldname": "qr_image",
    "fieldtype": "Attach",
    "label": "QR IMAGE LINK"
+  },
+  {
+   "fetch_from": "serial_number.item_code",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item name",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-02 15:09:29.734612",
+ "modified": "2025-02-17 16:39:11.556406",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Bulk Coupon",
