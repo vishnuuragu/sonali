@@ -10,9 +10,11 @@
   "item_name_fetch",
   "serial_nos",
   "weight",
+  "length",
   "size_mm",
   "mfg_date",
-  "stock_option"
+  "stock_option",
+  "item_price"
  ],
  "fields": [
   {
@@ -36,6 +38,7 @@
    "precision": "3"
   },
   {
+   "fetch_from": "item_name.custom_size_mm",
    "fieldname": "size_mm",
    "fieldtype": "Data",
    "label": "SIZE (MM)"
@@ -64,11 +67,21 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Item name fetch"
+  },
+  {
+   "fieldname": "item_price",
+   "fieldtype": "Data",
+   "label": "Item Price"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Data",
+   "label": "Length"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-11 16:01:16.357732",
+ "modified": "2025-02-18 13:41:09.810650",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Packaging Batch",

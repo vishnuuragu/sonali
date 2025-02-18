@@ -8,6 +8,7 @@ from frappe.model.document import Document
 class PackagingBatch(Document):
 	def validate(self):
 		self.update_total_weight()
+		self.update_total_length()
 	
 	def before_insert(self):
 		# Generate an auto-incrementing Batch ID
@@ -30,5 +31,11 @@ class PackagingBatch(Document):
 			for row in self.serial_nos:
 				total_weight += row.weight  
 
-		self.weight = total_weight  # Replace 'total_weight' with the actual fieldname in your parent doctype	# Save the changes to the parent doctype
+		self.weight = total_weight  
+	def update_total_length(self):
+		total_length = 0.0
+		if self.serial_nos:
+			for row in self.serial_nos:
+				total_length += row.length  
 
+		self.length = total_length
