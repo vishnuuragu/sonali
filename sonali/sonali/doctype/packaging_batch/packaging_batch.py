@@ -29,13 +29,15 @@ class PackagingBatch(Document):
 		total_weight = 0.0
 		if self.serial_nos:
 			for row in self.serial_nos:
-				total_weight += row.weight  
+				if row.weight:
+					total_weight += row.weight  
 
 		self.weight = total_weight  
 	def update_total_length(self):
 		total_length = 0.0
 		if self.serial_nos:
-			for row in self.serial_nos:
-				total_length += row.length  
+				for row in self.serial_nos:
+					if row.length:
+						total_length += row.length  
 
 		self.length = total_length
