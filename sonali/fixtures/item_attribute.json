@@ -15,20 +15,6 @@
        "parenttype": "Item Attribute"
       },
       {
-       "abbr": "XS",
-       "attribute_value": "Extra Small",
-       "parent": "Size",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
-       "abbr": "S",
-       "attribute_value": "Small",
-       "parent": "Size",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
        "abbr": "S",
        "attribute_value": "Small",
        "parent": "Size",
@@ -43,29 +29,8 @@
        "parenttype": "Item Attribute"
       },
       {
-       "abbr": "M",
-       "attribute_value": "Medium",
-       "parent": "Size",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
        "abbr": "L",
        "attribute_value": "Large",
-       "parent": "Size",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
-       "abbr": "L",
-       "attribute_value": "Large",
-       "parent": "Size",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
-       "abbr": "XL",
-       "attribute_value": "Extra Large",
        "parent": "Size",
        "parentfield": "item_attribute_values",
        "parenttype": "Item Attribute"
@@ -183,20 +148,6 @@
        "parenttype": "Item Attribute"
       },
       {
-       "abbr": "RED",
-       "attribute_value": "Red",
-       "parent": "Colour",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
-       "abbr": "GRE",
-       "attribute_value": "Green",
-       "parent": "Colour",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
        "abbr": "YELLOW",
        "attribute_value": "YELLOW",
        "parent": "Colour",
@@ -211,13 +162,6 @@
        "parenttype": "Item Attribute"
       },
       {
-       "abbr": "BLU",
-       "attribute_value": "Blue",
-       "parent": "Colour",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
        "abbr": "BLACK",
        "attribute_value": "BLACK",
        "parent": "Colour",
@@ -225,22 +169,8 @@
        "parenttype": "Item Attribute"
       },
       {
-       "abbr": "BLA",
-       "attribute_value": "Black",
-       "parent": "Colour",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
        "abbr": "GREEN",
        "attribute_value": "GREEN",
-       "parent": "Colour",
-       "parentfield": "item_attribute_values",
-       "parenttype": "Item Attribute"
-      },
-      {
-       "abbr": "WHI",
-       "attribute_value": "White",
        "parent": "Colour",
        "parentfield": "item_attribute_values",
        "parenttype": "Item Attribute"
