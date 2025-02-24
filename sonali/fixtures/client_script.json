@@ -53,5 +53,16 @@
   "name": "Sync packaging batch with Serial No",
   "script": "frappe.ui.form.on(\"Serial for custom Batch\", {\r\n    weight: function(frm, cdt, cdn) {  \r\n        let row = locals[cdt][cdn]; // Get the child table row\r\n\r\n        if (row.serial_no && row.weight) {\r\n            frappe.call({\r\n                method: \"frappe.client.set_value\",\r\n                args: {\r\n                    doctype: \"Serial No\",\r\n                    name: row.serial_no,  // Serial No document name\r\n                    fieldname: \"custom_weight\",\r\n                    value: row.weight\r\n                },\r\n                callback: function(response) {\r\n                    if (!response.exc) {\r\n                        frappe.show_alert({message: __(\"Serial No updated!\"), indicator: \"green\"});\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            frappe.msgprint(__(\"Please ensure Serial No and Weight are set in the row.\"));\r\n        }\r\n    },\r\n    length: function(frm, cdt, cdn) {  \r\n        let row = locals[cdt][cdn]; // Get the child table row\r\n\r\n        if (row.serial_no && row.length) {\r\n            frappe.call({\r\n                method: \"frappe.client.set_value\",\r\n                args: {\r\n                    doctype: \"Serial No\",\r\n                    name: row.serial_no,  // Serial No document name\r\n                    fieldname: \"custom_length\",\r\n                    value: row.length\r\n                },\r\n                callback: function(response) {\r\n                    if (!response.exc) {\r\n                        frappe.show_alert({message: __(\"Serial No updated!\"), indicator: \"green\"});\r\n                    }\r\n                }\r\n            });\r\n        } else {\r\n            frappe.msgprint(__(\"Please ensure Serial No and Weight are set in the row.\"));\r\n        }\r\n    }\r\n});\r\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Packaging Batch",
+  "enabled": 1,
+  "modified": "2025-02-18 11:56:08.689766",
+  "module": null,
+  "name": "Fetch Item Price on Packaging",
+  "script": "frappe.ui.form.on('Packaging Batch', {\r\n    item_name: function(frm) {  // Trigger when item_name is selected/changed\r\n        if (!frm.doc.item_name) return; // Ensure item_name is not empty\r\n\r\n        frappe.call({\r\n            method: \"frappe.client.get_value\",\r\n            args: {\r\n                doctype: \"Item Price\",\r\n                filters: {\r\n                    item_code: frm.doc.item_name,  // Ensure item_name is actually the Item Code\r\n                    selling: 1 // Fetch selling price only\r\n                },\r\n                fieldname: \"price_list_rate\"\r\n            },\r\n            callback: function(r) {\r\n                if (r.message) {\r\n                    frm.set_value(\"item_price\", r.message.price_list_rate); // Set the fetched price\r\n                    frm.refresh_field(\"item_price\"); // Ensure UI updates\r\n                    console.log(\"Price Updated:\", r.message.price_list_rate);\r\n                } else {\r\n                    frappe.msgprint(__(\"No Price Found for the selected Item\"));\r\n                }\r\n            }\r\n        });\r\n    }\r\n});\r\n",
+  "view": "Form"
  }
 ]

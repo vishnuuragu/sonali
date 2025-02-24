@@ -19,5 +19,12 @@
   "modified": "2024-11-18 20:35:02.103965",
   "name": "Review",
   "workflow_action_name": "Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2025-02-22 15:53:26.581272",
+  "name": "Dummy",
+  "workflow_action_name": "Dummy"
  }
 ]

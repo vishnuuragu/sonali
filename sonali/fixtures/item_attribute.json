@@ -122,5 +122,66 @@
   "name": "Colour",
   "numeric_values": 0,
   "to_range": 0.0
+ },
+ {
+  "attribute_name": "PVC Type",
+  "docstatus": 0,
+  "doctype": "Item Attribute",
+  "from_range": 0.0,
+  "increment": 0.0,
+  "item_attribute_values": [
+   {
+    "abbr": "LLR",
+    "attribute_value": "LLR",
+    "parent": "PVC Type",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "MDF",
+    "attribute_value": "MDF",
+    "parent": "PVC Type",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "KDF",
+    "attribute_value": "KDF",
+    "parent": "PVC Type",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   }
+  ],
+  "modified": "2025-02-18 20:55:52.892458",
+  "name": "PVC Type",
+  "numeric_values": 0,
+  "to_range": 0.0
+ },
+ {
+  "attribute_name": "LENGTH",
+  "docstatus": 0,
+  "doctype": "Item Attribute",
+  "from_range": 0.0,
+  "increment": 0.0,
+  "item_attribute_values": [
+   {
+    "abbr": "90M",
+    "attribute_value": "90M",
+    "parent": "LENGTH",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   },
+   {
+    "abbr": "100M",
+    "attribute_value": "100M",
+    "parent": "LENGTH",
+    "parentfield": "item_attribute_values",
+    "parenttype": "Item Attribute"
+   }
+  ],
+  "modified": "2025-02-18 20:56:41.449223",
+  "name": "LENGTH",
+  "numeric_values": 0,
+  "to_range": 0.0
  }
 ]
