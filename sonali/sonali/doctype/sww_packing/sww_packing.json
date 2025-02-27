@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-27 15:19:42.698864",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sww_work_order",
+  "item_name",
+  "sww_table",
+  "weight",
+  "length",
+  "size_mm",
+  "mfg_date",
+  "stock_option"
+ ],
+ "fields": [
+  {
+   "fieldname": "sww_work_order",
+   "fieldtype": "Link",
+   "label": "SWW WORK ORDER",
+   "options": "Work Order"
+  },
+  {
+   "fieldname": "sww_table",
+   "fieldtype": "Table",
+   "label": "SWW TABLE",
+   "options": "SWW CHILD"
+  },
+  {
+   "fetch_from": "sww_work_order.production_item",
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "ITEM NAME",
+   "options": "Item"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "precision": "3"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Data",
+   "label": "Length"
+  },
+  {
+   "fetch_from": "item_name.custom_size_mm",
+   "fieldname": "size_mm",
+   "fieldtype": "Data",
+   "label": "SIZE (MM)"
+  },
+  {
+   "default": "Today",
+   "fieldname": "mfg_date",
+   "fieldtype": "Date",
+   "label": "MFG DATE"
+  },
+  {
+   "fieldname": "stock_option",
+   "fieldtype": "Select",
+   "label": "Stock Option",
+   "options": "Inventory\nWork Order"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-27 19:15:36.994188",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "SWW PACKING",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

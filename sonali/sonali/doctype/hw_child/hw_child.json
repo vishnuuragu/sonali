@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-27 14:12:41.393418",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "master_box",
+  "small_box"
+ ],
+ "fields": [
+  {
+   "fieldname": "master_box",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "MASTER BOX",
+   "read_only": 1
+  },
+  {
+   "fieldname": "small_box",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "SMALL BOX",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-27 14:13:59.963823",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "HW CHILD",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

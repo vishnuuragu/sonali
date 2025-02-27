@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-27 14:11:13.681970",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "work_order",
+  "batch_data",
+  "master_box_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_data",
+   "fieldtype": "Data",
+   "label": "BATCH DATA",
+   "read_only": 1
+  },
+  {
+   "fieldname": "master_box_table",
+   "fieldtype": "Table",
+   "label": "MASTER BOX TABLE",
+   "options": "HW CHILD"
+  },
+  {
+   "fieldname": "work_order",
+   "fieldtype": "Link",
+   "label": "WORK ORDER",
+   "options": "Work Order"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-27 14:19:05.522232",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "HW PACKING",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
