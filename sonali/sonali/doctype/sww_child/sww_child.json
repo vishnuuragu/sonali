@@ -9,7 +9,8 @@
   "master_box",
   "serial_no",
   "weight",
-  "length"
+  "length",
+  "item_name"
  ],
  "fields": [
   {
@@ -26,6 +27,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "item_name.weight_per_unit",
    "fieldname": "weight",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -38,12 +40,18 @@
    "in_list_view": 1,
    "label": "LENGTH",
    "precision": "0"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "Item Name",
+   "options": "Item"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-27 19:38:53.995309",
+ "modified": "2025-03-01 16:32:54.213843",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "SWW CHILD",
