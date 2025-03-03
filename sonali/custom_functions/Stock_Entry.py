@@ -38,14 +38,6 @@ def create_and_submit_stock_entry(item_code, weight):
                     break
                 time.sleep(0.3)  # Wait for 0.3 seconds before retrying
                 attempts += 1
-            print(serial_nos[0])
-            # If serial number exists, update the custom_weight field
-            if serial_nos:
-                frappe.db.set_value("Serial No", serial_nos[0], "custom_weight", weight, update_modified=True)
-                frappe.db.commit()
-                frappe.clear_cache(doctype="Serial No")  # Clears cache for the doctype
-                frappe.publish_realtime("msgprint", {"message": "Serial No updated!"})  # Notify UI
-
 
             return {"name": doc.name, "status": "Submitted", "serial_numbers": serial_nos}
         else:
