@@ -8,13 +8,16 @@
   "batch_id",
   "item_name",
   "item_name_fetch",
+  "master_box_serial",
+  "scan_barcode",
   "serial_nos",
   "weight",
   "length",
   "size_mm",
   "mfg_date",
   "stock_option",
-  "item_price"
+  "item_price",
+  "amended_from"
  ],
  "fields": [
   {
@@ -77,11 +80,35 @@
    "fieldname": "length",
    "fieldtype": "Data",
    "label": "Length"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Packaging Batch",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "scan_barcode",
+   "fieldtype": "Data",
+   "label": "SCAN BARCODE",
+   "options": "Barcode"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "master_box_serial",
+   "fieldtype": "Data",
+   "label": "MASTER BOX SERIAL",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2025-02-18 13:41:09.810650",
+ "modified": "2025-03-14 20:54:20.287301",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Packaging Batch",
