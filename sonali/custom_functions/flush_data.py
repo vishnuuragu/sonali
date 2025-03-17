@@ -8,6 +8,7 @@ import frappe
 #     # Delete Work Orders
 #     frappe.db.sql("DELETE FROM `tabWork Order`")
 #     frappe.db.sql("DELETE FROM `tabWork Order Item`")
+#     frappe.db.sql("DELETE FROM tabJob Card")
 
 #     # Delete Ledger and GL Entries
 #     frappe.db.sql("DELETE FROM `tabStock Ledger Entry`")  # Clears stock movements
