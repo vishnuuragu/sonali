@@ -27,7 +27,7 @@ class PackagingBatch(Document):
 
     def update_total_weight(self):
         total_weight = sum(row.weight for row in self.serial_nos if row.weight)
-        self.weight = total_weight
+        self.weight = round(total_weight, 3)
 
     def update_total_length(self):
         total_length = sum(row.length for row in self.serial_nos if row.length)
