@@ -5,32 +5,17 @@
  "disabled": 0,
  "docstatus": 0,
  "doctype": "Report",
- "filters": [
-  {
-   "fieldname": "from_date",
-   "fieldtype": "Date",
-   "label": "From Date",
-   "mandatory": 0,
-   "wildcard_filter": 0
-  },
-  {
-   "fieldname": "to_date",
-   "fieldtype": "Date",
-   "label": "To Date",
-   "mandatory": 0,
-   "wildcard_filter": 0
-  }
- ],
+ "filters": [],
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-03-18 20:46:15.417542",
+ "modified": "2025-03-19 12:54:11.744329",
  "modified_by": "Administrator",
  "module": "Sonali",
  "name": "Employee Work Hours",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "SELECT \n    jctl.employee AS \"Employee:Link/Employee:150\",\n    emp.employee_name AS \"Employee Name:Data:200\",\n    DATE_FORMAT(jctl.creation, \"%%m-%%Y\") AS \"Month:Data:100\",\n    SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(jctl.to_time, jctl.from_time)))) AS \"Total Hours:Time:120\"\nFROM \n    `tabJob Card Time Log` jctl\nJOIN \n    `tabEmployee` emp ON jctl.employee = emp.name\nWHERE \n    jctl.creation BETWEEN %(from_date)s AND %(to_date)s\nGROUP BY \n    jctl.employee, DATE_FORMAT(jctl.creation, \"%%m-%%Y\")\nORDER BY \n    jctl.employee, DATE_FORMAT(jctl.creation, \"%%m-%%Y\");\n",
+ "query": "SELECT \n    jctl.employee AS \"Employee:Link/Employee:150\",\n    emp.employee_name AS \"Employee Name:Data:200\",\n    DATE_FORMAT(jctl.creation, \"%%Y-%%m\") AS \"Month:Data:100\",\n    SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(jctl.to_time, jctl.from_time)))) AS \"Total Hours:Time:120\"\nFROM \n    `tabJob Card Time Log` jctl\nJOIN \n    `tabEmployee` emp ON jctl.employee = emp.name\nWHERE \n    DATE_FORMAT(jctl.creation, \"%%Y-%%m\") = DATE_FORMAT(CURDATE(), \"%%Y-%%m\")  -- Filter only current month\nGROUP BY \n    jctl.employee, DATE_FORMAT(jctl.creation, \"%%Y-%%m\")\nORDER BY \n    jctl.employee, DATE_FORMAT(jctl.creation, \"%%Y-%%m\");\n",
  "ref_doctype": "Job Card",
  "report_name": "Employee Work Hours",
  "report_type": "Query Report",
