@@ -30,5 +30,13 @@
   "employee_list": [],
   "modified": "2024-12-12 12:20:44.316060",
   "name": "Packaging Team"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Employee Group",
+  "employee_group_name": "Quality Team",
+  "employee_list": [],
+  "modified": "2025-03-18 17:02:49.216417",
+  "name": "Quality Team"
  }
 ]
