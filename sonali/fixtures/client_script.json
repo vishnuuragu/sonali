@@ -57,17 +57,6 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Work Order",
-  "enabled": 1,
-  "modified": "2025-03-18 15:49:40.936980",
-  "module": null,
-  "name": "Buttons on Work Order",
-  "script": "frappe.ui.form.on('Work Order', {\r\n    refresh: function(frm) {\r\n        if (frm.doc.docstatus === 1) { // Ensure it's submitted\r\n            frm.add_custom_button('Create HW PACKING', function() {\r\n                frappe.new_doc('HW PACKING', {\r\n                    work_order: frm.doc.name // Pass the Work Order ID\r\n                });\r\n            }, __('Create'));\r\n        }\r\n    }\r\n});",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
   "dt": "HW PACKING",
   "enabled": 1,
   "modified": "2025-02-27 15:09:30.709319",
@@ -91,11 +80,11 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Sales Invoice",
-  "enabled": 1,
-  "modified": "2025-03-13 18:51:48.329741",
-  "module": null,
+  "enabled": 0,
+  "modified": "2025-03-19 20:03:30.387969",
+  "module": "Sonali",
   "name": "Fetch Weight on Sales Invoice",
-  "script": "frappe.ui.form.on('Sales Invoice', {\r\n    after_save: function(frm) {\r\n        frappe.call({\r\n            method: \"sonali.custom_functions.Sales_Invoice.get_serial_and_batch_details_from_sales_invoice\",\r\n            args: {\r\n                sales_invoice: frm.doc.name\r\n            },\r\n            callback: function(response) {\r\n                if (response.message) {\r\n                    let grouped_weights = {};\r\n                    console.log(response.message);\r\n\r\n                    // Group weights by item_code\r\n                    response.message.forEach(item => {\r\n                        if (!grouped_weights[item.item_code]) {\r\n                            grouped_weights[item.item_code] = 0;\r\n                        }\r\n                        grouped_weights[item.item_code] += parseFloat(item.weight);\r\n                    });\r\n\r\n                    // Update the Sales Invoice Item table\r\n                    frm.doc.items.forEach(row => {\r\n                        if (grouped_weights[row.item_code]) {\r\n                            let weight = grouped_weights[row.item_code];\r\n\r\n                            // Set custom weight\r\n                            frappe.model.set_value(row.doctype, row.name, 'custom_weight_in_kg', weight);\r\n                        }\r\n                    });\r\n\r\n                    frm.refresh_field('items'); // Refresh the items table to reflect changes\r\n                }\r\n            }\r\n        });\r\n    }\r\n});\r\n\r\nfrappe.ui.form.on('Sales Invoice Item', {\r\n    custom_rate_per_kg: function(frm, cdt, cdn) {\r\n        let row = locals[cdt][cdn];\r\n        console.log(row);\r\n        rate = ( row.custom_weight_in_kg * row.custom_rate_per_kg ) / row.qty;\r\n        frappe.model.set_value(cdt, cdn, 'rate', rate);\r\n    }\r\n});",
+  "script": "frappe.ui.form.on(\"Sales Invoice\", {\n    after_save: function(frm) {\n        if (frm.doc.docstatus !== 0) {  // 0 = Draft, 1 = Submitted\n            frappe.msgprint(__(\"Cannot update a submitted Sales Invoice\"));\n            return;\n        }\n\n        frappe.call({\n            method: \"sonali.custom_functions.get_delivery_note_weights.get_delivery_note_weights\",\n            args: {\n                sales_invoice: frm.doc.name\n            },\n            callback: function(response) {\n                console.log(\"Response from Server:\", response);\n                if (response.message.updated_items) {\n                    frm.refresh_field(\"items\");\n                }\n            }\n        });\n    }\n});\nfrappe.ui.form.on('Sales Invoice Item', {\n    custom_rate_per_kg: function(frm, cdt, cdn) {\n        let row = locals[cdt][cdn];\n        console.log(row);\n        rate = ( row.custom_weight_in_kg * row.custom_rate_per_kg ) / row.qty;\n        frappe.model.set_value(cdt, cdn, 'rate', rate);\n    }\n});",
   "view": "Form"
  },
  {
@@ -147,10 +136,32 @@
   "doctype": "Client Script",
   "dt": "Work Order",
   "enabled": 1,
-  "modified": "2025-03-19 16:01:24.551401",
+  "modified": "2025-03-20 14:32:08.861167",
   "module": "Sonali",
   "name": "Print Serial No",
-  "script": "frappe.ui.form.on('Work Order', {\n    refresh: function(frm) {\n        console.log(\"Work Order form refreshed\");\n\n        if (!frm.is_new()) {\n            console.log(\"Work Order is not new, adding button...\");\n\n            frm.add_custom_button(__('Print Serial No'), function() {\n                console.log(\"Print Serial No button clicked\");\n\n                console.log(\"Work Order Items Data:\", frm.doc.items); // Debugging Line\n\n                if (!frm.doc.items || frm.doc.items.length === 0) {\n                    frappe.msgprint(\"No items found in the Work Order.\");\n                    return;\n                }\n\n                // Extract item codes from Work Order\n                let item_codes = frm.doc.items.map(i => i.item_code);\n                console.log(\"Extracted Item Codes:\", item_codes);\n\n                frappe.call({\n                    method: \"frappe.client.get_list\",\n                    args: {\n                        doctype: \"Serial No\",\n                        filters: [\n                            [\"item_code\", \"in\", item_codes]\n                        ],\n                        fields: [\"name\"],\n                        limit_page_length: 100\n                    },\n                    callback: function(response) {\n                        console.log(\"Serial No API Response:\", response);\n\n                        if (response.message.length > 0) {\n                            let serial_no = response.message[0].name;\n\n                            // Open the custom print format \"SON Printing\"\n                            frappe.set_route(\"print\", \"Serial No\", serial_no, \"SON Printing\");\n                        } else {\n                            frappe.msgprint(\"No Serial Numbers found for this Work Order.\");\n                        }\n                    }\n                });\n            }, __(\"Create\"));\n        } else {\n            console.log(\"Work Order is new, button not added\");\n        }\n    }\n});\n",
+  "script": "frappe.ui.form.on('Work Order', {\n    refresh: function(frm) {\n        console.log(\"Work Order form refreshed\");\n\n        if (!frm.is_new()) {\n            console.log(\"Work Order is not new, adding button...\");\n\n            frm.add_custom_button(__('HW Packing'), function() {\n                console.log(\"Print Serial No button clicked\");\n\n                let print_url = `/printview?doctype=Work Order&name=${frm.doc.name}&format=SON Printing&no_letterhead=0`;\n                window.open(print_url, \"_blank\");\n\n            }, __(\"Create\"));\n        } else {\n            console.log(\"Work Order is new, button not added\");\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-03-19 20:47:42.758225",
+  "module": "Sonali",
+  "name": "Sales Invoice  - Delivery Note",
+  "script": "frappe.ui.form.on(\"Sales Invoice\", {\n    after_save: function(frm) {\n        if (frm.doc.docstatus !== 0) {  // Prevent updating submitted invoices\n            frappe.msgprint(__(\"Cannot update a submitted Sales Invoice\"));\n            return;\n        }\n\n        frappe.call({\n            method: \"sonali.custom_functions.get_delivery_note_weights.get_delivery_note_weights\",\n            args: {\n                sales_invoice: frm.doc.name\n            },\n            callback: function(response) {\n                console.log(\"Response from Server:\", response);\n\n                if (response.message && response.message.updated_items) {\n                    frm.set_value(\"items\", []);  // Clear existing items\n\n                    response.message.updated_items.forEach(item => {\n                        let child = frm.add_child(\"items\");\n                        child.item_code = item.item_code;\n                        child.custom_weight_in_kg = item.custom_weight_in_kg;\n                        child.rate = item.rate;\n                    });\n\n                    frm.refresh_field(\"items\");\n                } else {\n                    console.warn(\"No updated items found in response\");\n                }\n            },\n            error: function(error) {\n                console.error(\"Error fetching delivery note weights:\", error);\n                frappe.msgprint(__(\"Failed to fetch delivery note weights.\"));\n            }\n        });\n    },\n    onload: function(frm) {\n        if (frm.doc.__islocal && frm.doc.items.length > 0) {\n            frappe.call({\n                method: \"sonali.custom_functions.get_delivery_note_weights.get_delivery_note_weights\",\n                args: {\n                    sales_invoice: frm.doc.name\n                },\n                callback: function(response) {\n                    console.log(\"Response from Server:\", response);\n\n                    if (response.message && response.message.updated_items) {\n                        frm.set_value(\"items\", []);  // Clear existing items\n\n                        response.message.updated_items.forEach(item => {\n                            let child = frm.add_child(\"items\");\n                            child.item_code = item.item_code;\n                            child.custom_weight_in_kg = item.custom_weight_in_kg;\n                            child.rate = item.rate;\n                        });\n\n                        frm.refresh_field(\"items\");\n                    } else {\n                        console.warn(\"No updated items found in response\");\n                    }\n                },\n                error: function(error) {\n                    console.error(\"Error fetching delivery note weights:\", error);\n                    frappe.msgprint(__(\"Failed to fetch delivery note weights.\"));\n                }\n            });\n        }\n    }\n});\n\nfrappe.ui.form.on('Sales Invoice Item', {\n    custom_rate_per_kg: function(frm, cdt, cdn) {\n        let row = locals[cdt][cdn];\n        if (row.qty) {\n            let rate = (row.custom_weight_in_kg * row.custom_rate_per_kg) / row.qty;\n            frappe.model.set_value(cdt, cdn, 'rate', rate);\n        }\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Delivery Note",
+  "enabled": 1,
+  "modified": "2025-03-20 11:38:53.502626",
+  "module": "Sonali",
+  "name": "Tax Hide in DN",
+  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        // Hide the tax and related fields\n        frm.toggle_display('taxes', false); // Hides the Taxes and Charges table\n        frm.toggle_display('taxes_and_charges', false); // Hides the Taxes and Charges Template field\n        frm.toggle_display('total_taxes_and_charges', false); // Hides the Total Taxes field\n    }\n});\n",
   "view": "Form"
  }
 ]
