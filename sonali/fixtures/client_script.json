@@ -158,10 +158,21 @@
   "doctype": "Client Script",
   "dt": "Delivery Note",
   "enabled": 1,
-  "modified": "2025-03-20 11:38:53.502626",
+  "modified": "2025-03-20 17:32:48.239264",
   "module": "Sonali",
   "name": "Tax Hide in DN",
-  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        // Hide the tax and related fields\n        frm.toggle_display('taxes', false); // Hides the Taxes and Charges table\n        frm.toggle_display('taxes_and_charges', false); // Hides the Taxes and Charges Template field\n        frm.toggle_display('total_taxes_and_charges', false); // Hides the Total Taxes field\n    }\n});\n",
+  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        // Hide the tax and related fields\n        frm.toggle_display('taxes', false); // Hides the Taxes and Charges table\n        frm.toggle_display('taxes_and_charges', false); // Hides the Taxes and Charges Template field\n        frm.toggle_display('total_taxes_and_charges', false); // Hides the Total Taxes field\n        frm.toggle_display('tax_id', false); // Hides the Tax ID field\n        // frm.toggle_display('customer', false);\n\n        // Hide section breaks\n        frm.toggle_display('pricing_rule_details', false);\n        frm.toggle_display('section_gst_breakup', false);\n        frm.toggle_display('sec_tax_breakup', false);\n        frm.toggle_display('section_break_49', false);\n        frm.toggle_display('totals', false);\n        frm.toggle_display('taxes_section', false);\n        frm.toggle_display('accounting_dimensions_section', false);\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Delivery Note",
+  "enabled": 1,
+  "modified": "2025-03-20 17:33:31.980813",
+  "module": "Sonali",
+  "name": "Customer code fetching in DN",
+  "script": "frappe.ui.form.on('Delivery Note', {\n\trefresh(frm) {\n\t\t// your code here\n\t}\n})",
   "view": "Form"
  }
 ]
