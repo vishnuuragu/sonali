@@ -1,0 +1,31 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-03-20 12:43:25.013870",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-03-20 13:02:13.137312",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "Custom Stock Ledger Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT \n    sle.item_code AS \"Item Code:Link/Item:150\",\n    item.item_name AS \"Item Name::200\",\n    item.item_group AS \"Item Group:Link/Item Group:150\",\n    sle.warehouse AS \"Warehouse:Link/Warehouse:150\",\n    SUM(sle.actual_qty) AS \"Total Inward/Outward Qty:Float:120\",\n    SUM(sle.qty_after_transaction) AS \"Final Balance Qty:Float:120\",\n    AVG(sle.valuation_rate) AS \"Average Valuation Rate:Currency:100\",\n    SUM(sle.stock_value) AS \"Total Stock Value:Currency:120\",\n    IFNULL((\n        SELECT SUM(sn.custom_weight) \n        FROM `tabSerial No` sn \n        WHERE sn.item_code = sle.item_code\n    ), 0) AS \"Weights:Float:120\"\nFROM `tabStock Ledger Entry` sle\nJOIN `tabItem` item ON sle.item_code = item.item_code\nWHERE item.item_group = 'Products'\nGROUP BY sle.item_code, sle.warehouse\nORDER BY sle.item_code, sle.warehouse;\n",
+ "ref_doctype": "Stock Ledger Entry",
+ "report_name": "Custom Stock Ledger Report",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Accounts Manager"
+  }
+ ],
+ "timeout": 0
+}
