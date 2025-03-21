@@ -136,7 +136,7 @@
   "doctype": "Client Script",
   "dt": "Work Order",
   "enabled": 1,
-  "modified": "2025-03-20 14:32:08.861167",
+  "modified": "2025-03-21 23:29:47.965927",
   "module": "Sonali",
   "name": "Print Serial No",
   "script": "frappe.ui.form.on('Work Order', {\n    refresh: function(frm) {\n        console.log(\"Work Order form refreshed\");\n\n        if (!frm.is_new()) {\n            console.log(\"Work Order is not new, adding button...\");\n\n            frm.add_custom_button(__('HW Packing'), function() {\n                console.log(\"Print Serial No button clicked\");\n\n                let print_url = `/printview?doctype=Work Order&name=${frm.doc.name}&format=SON Printing&no_letterhead=0`;\n                window.open(print_url, \"_blank\");\n\n            }, __(\"Create\"));\n        } else {\n            console.log(\"Work Order is new, button not added\");\n        }\n    }\n});\n",
