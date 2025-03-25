@@ -158,21 +158,21 @@
   "doctype": "Client Script",
   "dt": "Delivery Note",
   "enabled": 1,
-  "modified": "2025-03-20 17:32:48.239264",
+  "modified": "2025-03-24 15:29:08.442121",
   "module": "Sonali",
   "name": "Tax Hide in DN",
-  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        // Hide the tax and related fields\n        frm.toggle_display('taxes', false); // Hides the Taxes and Charges table\n        frm.toggle_display('taxes_and_charges', false); // Hides the Taxes and Charges Template field\n        frm.toggle_display('total_taxes_and_charges', false); // Hides the Total Taxes field\n        frm.toggle_display('tax_id', false); // Hides the Tax ID field\n        // frm.toggle_display('customer', false);\n\n        // Hide section breaks\n        frm.toggle_display('pricing_rule_details', false);\n        frm.toggle_display('section_gst_breakup', false);\n        frm.toggle_display('sec_tax_breakup', false);\n        frm.toggle_display('section_break_49', false);\n        frm.toggle_display('totals', false);\n        frm.toggle_display('taxes_section', false);\n        frm.toggle_display('accounting_dimensions_section', false);\n    }\n});",
+  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        // Hide the tax and related fields\n        frm.toggle_display('taxes', false); // Hides the Taxes and Charges table\n        frm.toggle_display('taxes_and_charges', false); // Hides the Taxes and Charges Template field\n        frm.toggle_display('total_taxes_and_charges', false); // Hides the Total Taxes field\n        frm.toggle_display('tax_id', false); // Hides the Tax ID field\n        frm.toggle_display('customer', false);\n\n        // Hide section breaks\n        frm.toggle_display('pricing_rule_details', false);\n        frm.toggle_display('section_gst_breakup', false);\n        frm.toggle_display('sec_tax_breakup', false);\n        frm.toggle_display('section_break_49', false);\n        frm.toggle_display('totals', false);\n        frm.toggle_display('taxes_section', false);\n        frm.toggle_display('accounting_dimensions_section', false);\n    }\n});",
   "view": "Form"
  },
  {
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Delivery Note",
-  "enabled": 0,
-  "modified": "2025-03-24 11:11:15.160295",
+  "enabled": 1,
+  "modified": "2025-03-24 14:45:04.665253",
   "module": "Sonali",
   "name": "Customer code fetching in DN",
-  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        frm.set_query(\"custom_customer_code\", function() {\n            return {\n                filters: {\n                    \"custom_customer_code\": [\"!=\", \"\"]\n                }\n            };\n        });\n\n        // Override the options to display only custom_customer_code\n        frappe.db.get_list('Customer', {\n            fields: ['custom_customer_code', 'name'],\n            filters: { 'custom_customer_code': [\"!=\", \"\"] }\n        }).then(records => {\n            let options = records.map(r => ({\n                value: r.custom_customer_code,\n                label: r.custom_customer_code // Show only custom_customer_code\n            }));\n            frm.set_df_property('custom_customer_code', 'options', options);\n        });\n    },\n\n    // When selecting Customer Code, fetch details\n    custom_customer_code: function(frm) {\n        if (frm.doc.custom_customer_code) {\n            frappe.db.get_list('Customer', {\n                fields: ['name', 'customer_name', 'customer_group', 'territory', 'custom_customer_code'],\n                filters: { 'custom_customer_code': frm.doc.custom_customer_code }\n            }).then(records => {\n                if (records.length > 0) {\n                    let data = records[0];\n                    frm.set_value('customer', data.name);  \n                    frm.set_value('customer_name', data.customer_name);\n                    frm.set_value('customer_group', data.customer_group);\n                    frm.set_value('territory', data.territory);\n                }\n            });\n        }\n    }\n});\n",
+  "script": "frappe.ui.form.on('Delivery Note', {\n    refresh: function(frm) {\n        frm.set_query(\"custom_customer_code_1\", function() {\n            return {\n                doctype: \"Customer\",\n                filters: {\n                    \"custom_customer_code\": [\"!=\", \"\"]\n                }\n            };\n        });\n    },\n\n    custom_customer_code_1: function(frm) {\n        if (frm.doc.custom_customer_code_1) {\n            frappe.db.get_value('Customer', \n                { 'custom_customer_code': frm.doc.custom_customer_code_1 }, \n                ['name', 'customer_name', 'customer_group', 'territory', 'custom_customer_code']\n            ).then(response => {\n                if (response.message) {\n                    let customer = response.message;\n                    frm.set_value('customer', customer.name);  \n                    frm.set_value('customer_name', customer.customer_name);\n                    frm.set_value('customer_group', customer.customer_group);\n                    frm.set_value('territory', customer.territory);\n                }\n            });\n        }\n    }\n});\n",
   "view": "Form"
  },
  {
