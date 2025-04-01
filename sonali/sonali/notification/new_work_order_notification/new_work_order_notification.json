@@ -1,0 +1,28 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "creation": "2025-03-28 18:19:05.813447",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Work Order",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "A new work order {{ doc.name }} has been created by {{ doc.owner }}.\n",
+ "message_type": "Markdown",
+ "modified": "2025-04-01 19:19:23.883892",
+ "modified_by": "Administrator",
+ "module": "Sonali",
+ "name": "New Work Order Notification",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Production user"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "New Work Order Created: {{ doc.name }}"
+}
