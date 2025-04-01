@@ -264,6 +264,9 @@ fixtures = [
     {
         "doctype": "Manufacturing Settings",
     },
+    {
+        "doctype": "Notification",
+    },
     {"dt": "Employee Group", "filters": []},
     {"dt": "Quality Inspection Template", "filters": []},
     {"dt": "Item Attribute", "filters": []},
