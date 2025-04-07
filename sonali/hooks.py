@@ -266,6 +266,9 @@ fixtures = [
     },
     {
         "doctype": "Notification",
+        "filters": [
+            ["is_standard", "=", 0]  # Only include custom notifications
+        ],
     },
     {"dt": "Employee Group", "filters": []},
     {"dt": "Quality Inspection Template", "filters": []},
