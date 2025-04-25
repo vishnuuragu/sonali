@@ -272,7 +272,6 @@ fixtures = [
     },
     {"dt": "Employee Group", "filters": []},
     {"dt": "Quality Inspection Template", "filters": []},
-    {"dt": "Item Attribute", "filters": []},
     {"dt": "Role", "filters": [["name", "in", ["Package Manager"]]]},
 ]
 
