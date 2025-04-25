@@ -270,7 +270,6 @@ fixtures = [
             ["is_standard", "=", 0]  # Only include custom notifications
         ],
     },
-    {"dt": "Employee Group", "filters": []},
     {"dt": "Quality Inspection Template", "filters": []},
     {"dt": "Role", "filters": [["name", "in", ["Package Manager"]]]},
 ]
