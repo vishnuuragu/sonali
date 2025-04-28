@@ -45,25 +45,41 @@ def get_delivery_note_weights(sales_invoice):
                 "total_length": length
             }
 
+    # Now let's update the items of the Sales Invoice based on the grouped data
     updated_items = []
-    sales_invoice_doc.items = []  # ✅ Clear existing items to avoid duplicates
 
     for key, grouped_item in grouped_items.items():
-        new_item = sales_invoice_doc.append("items", {})
-        new_item.item_code = grouped_item["item_code"]
-        new_item.custom_weight_in_kg = round(grouped_item["total_weight"], 3)
-        new_item.custom_length_in_m = round(grouped_item["total_length"], 3)
-        new_item.qty = grouped_item["qty"]
-        new_item.delivery_note = grouped_item["delivery_note"]
-        new_item.rate = 0  # User will enter manually
+        # Check if the item already exists in the Sales Invoice
+        existing_item = next(
+            (item for item in sales_invoice_doc.items if item.item_code == grouped_item["item_code"] and item.delivery_note == grouped_item["delivery_note"]),
+            None
+        )
+
+        if existing_item:
+            # Update the existing item with new values
+            existing_item.qty = grouped_item["qty"]  # Set the quantity to the new quantity
+            existing_item.custom_weight_in_kg = round(grouped_item["total_weight"], 3)
+            existing_item.custom_length_in_meter = round(grouped_item["total_length"], 3)  # Ensure custom_length_in_meter is set
+        else:
+            # Add a new item if it doesn't exist
+            new_item = sales_invoice_doc.append("items", {})
+            new_item.item_code = grouped_item["item_code"]
+            new_item.custom_weight_in_kg = round(grouped_item["total_weight"], 3)
+            new_item.custom_length_in_meter = round(grouped_item["total_length"], 3)  # Set custom_length_in_meter for new item
+            new_item.qty = grouped_item["qty"]
+            new_item.delivery_note = grouped_item["delivery_note"]
+            new_item.rate = 0  # User will enter manually
 
         updated_items.append({
             "delivery_note": grouped_item["delivery_note"],
             "item_code": grouped_item["item_code"],
-            "custom_weight_in_kg": new_item.custom_weight_in_kg,
-            "custom_length_in_m": new_item.custom_length_in_m,
+            "custom_weight_in_kg": grouped_item["total_weight"],
+            "custom_length_in_meter": grouped_item["total_length"],
             "qty": grouped_item["qty"],
             "rate": 0
         })
+
+    # Save the updated Sales Invoice document
+    # sales_invoice_doc.save()
 
     return {"updated_items": updated_items}
