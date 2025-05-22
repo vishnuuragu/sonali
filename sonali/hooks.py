@@ -262,15 +262,11 @@ fixtures = [
         "doctype": "Print Format",
     },
     {
-        "doctype": "Manufacturing Settings",
-    },
-    {
         "doctype": "Notification",
         "filters": [
             ["is_standard", "=", 0]  # Only include custom notifications
         ],
     },
-    {"dt": "Quality Inspection Template", "filters": []},
     {"dt": "Role", "filters": [["name", "in", ["Package Manager"]]]},
 ]
 
