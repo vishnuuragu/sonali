@@ -45,13 +45,20 @@ def get_delivery_note_weights(sales_invoice):
                 "total_length": length
             }
 
-    # Now let's update the items of the Sales Invoice based on the grouped data
+    # ✅ If total weight and total length are 0, use qty as fallback
+    for key, item in grouped_items.items():
+        if item["total_weight"] == 0 and item["total_length"] == 0:
+            item["total_weight"] = item["qty"]
+            item["total_length"] = item["qty"]
+
+    # ✅ Update the Sales Invoice items
     updated_items = []
 
     for key, grouped_item in grouped_items.items():
         # Check if the item already exists in the Sales Invoice
         existing_item = next(
-            (item for item in sales_invoice_doc.items if item.item_code == grouped_item["item_code"] and item.delivery_note == grouped_item["delivery_note"]),
+            (item for item in sales_invoice_doc.items 
+             if item.item_code == grouped_item["item_code"] and item.delivery_note == grouped_item["delivery_note"]),
             None
         )
 
@@ -76,7 +83,8 @@ def get_delivery_note_weights(sales_invoice):
             "custom_weight_in_kg": grouped_item["total_weight"],
             "custom_length_in_meter": grouped_item["total_length"],
             "qty": grouped_item["qty"],
-            "rate": 0
+            "rate": 0,
+            "uom": frappe.db.get_value("Item", grouped_item["item_code"], "sales_uom") or "Nos"
         })
 
     # Save the updated Sales Invoice document
